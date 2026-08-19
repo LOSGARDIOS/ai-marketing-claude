@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הצעה עסקית — מותג הגת</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500&family=Heebo:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* ─── Tokens ────────────────────────────────────────────────────────────── */
+:root {
+  --bg:       #FAF7F2;
+  --bg-alt:   #F2EDE4;
+  --surface:  #EDE7DC;
+  --border:   #D4C9B3;
+  --text:     #1C1814;
+  --text-2:   #5A5040;
+  --text-3:   #8A7D6A;
+  --accent:   #8B6914;
+  --accent-2: #C4863A;
+  --gold-hi:  #E8A94A;
+  --low:      #2D6A4F;
+  --low-bg:   #D8F3DC;
+  --med:      #B07A00;
+  --med-bg:   #FFF3CD;
+  --rule:     rgba(139,105,20,.18);
+
+  --ff-dis: 'Fraunces', Georgia, serif;
+  --ff-bod: 'DM Sans', system-ui, sans-serif;
+  --ff-heb: 'Heebo', system-ui, sans-serif;
+  --ff-mon: 'JetBrains Mono', monospace;
+
+  --r: 6px;
+  --r-lg: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:       #14110D;
+    --bg-alt:   #1C1814;
+    --surface:  #252018;
+    --border:   #3A3228;
+    --text:     #EDE8DF;
+    --text-2:   #B0A490;
+    --text-3:   #7A6E5A;
+    --accent:   #D4A53B;
+    --accent-2: #E8B96A;
+    --gold-hi:  #F0C97A;
+    --low:      #52B788;
+    --low-bg:   #1B3D29;
+    --med:      #E8A020;
+    --med-bg:   #3A2D00;
+    --rule:     rgba(212,165,59,.15);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg:       #14110D;
+  --bg-alt:   #1C1814;
+  --surface:  #252018;
+  --border:   #3A3228;
+  --text:     #EDE8DF;
+  --text-2:   #B0A490;
+  --text-3:   #7A6E5A;
+  --accent:   #D4A53B;
+  --accent-2: #E8B96A;
+  --gold-hi:  #F0C97A;
+  --low:      #52B788;
+  --low-bg:   #1B3D29;
+  --med:      #E8A020;
+  --med-bg:   #3A2D00;
+  --rule:     rgba(212,165,59,.15);
+}
+
+/* ─── Reset + Base ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--ff-heb);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); }
+img, svg { max-width: 100%; }
+
+/* ─── Layout ────────────────────────────────────────────────────────────── */
+.page { max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* ─── Cover ─────────────────────────────────────────────────────────────── */
+.cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 0 60px;
+  position: relative;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 30% 50%, rgba(139,105,20,.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cover-eyebrow {
+  font-family: var(--ff-mon);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 32px;
+}
+.cover-name {
+  font-family: var(--ff-heb);
+  font-size: clamp(72px, 16vw, 140px);
+  font-weight: 900;
+  line-height: .9;
+  color: var(--accent);
+  letter-spacing: -.02em;
+  margin-bottom: 24px;
+}
+.cover-name .latin { font-family: var(--ff-dis); font-style: italic; font-size: .65em; }
+.cover-tagline {
+  font-family: var(--ff-heb);
+  font-size: clamp(18px, 3vw, 26px);
+  font-weight: 300;
+  color: var(--text-2);
+  max-width: 520px;
+  margin-bottom: 48px;
+  line-height: 1.5;
+}
+.cover-meta {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  padding-top: 32px;
+}
+.cover-meta-item { font-size: 13px; color: var(--text-3); }
+.cover-meta-item strong { display: block; color: var(--text); font-size: 14px; margin-bottom: 2px; }
+
+.cover-accent-bar {
+  position: absolute;
+  left: -24px;
+  top: 80px;
+  width: 4px;
+  height: 120px;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-2) 100%);
+  border-radius: 4px;
+}
+
+/* ─── Section ───────────────────────────────────────────────────────────── */
+.section {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.section:last-child { border-bottom: none; }
+
+.section-label {
+  font-family: var(--ff-mon);
+  font-size: 10.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::after {
+  content: '';
+  display: inline-block;
+  height: 1px;
+  width: 40px;
+  background: var(--accent);
+  opacity: .4;
+}
+
+.section-title {
+  font-family: var(--ff-heb);
+  font-size: clamp(26px, 5vw, 38px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+.section-intro {
+  font-size: 17px;
+  color: var(--text-2);
+  max-width: 640px;
+  margin-bottom: 40px;
+  line-height: 1.75;
+}
+
+/* ─── Pull Quote ────────────────────────────────────────────────────────── */
+.pull-quote {
+  background: var(--bg-alt);
+  border-right: 4px solid var(--accent);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 28px 28px 28px 24px;
+  margin: 32px 0;
+  font-family: var(--ff-heb);
+  font-size: clamp(20px, 3.5vw, 28px);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text);
+}
+.pull-quote .sub {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-3);
+  margin-top: 8px;
+  font-family: var(--ff-heb);
+}
+
+/* ─── Cards ─────────────────────────────────────────────────────────────── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+.card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 24px;
+}
+.card-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+  display: block;
+}
+.card-title {
+  font-family: var(--ff-heb);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.card-body {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.65;
+}
+
+/* ─── Character Box ─────────────────────────────────────────────────────── */
+.character-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 40px;
+  margin: 36px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+@media (max-width: 600px) { .character-box { grid-template-columns: 1fr; } }
+
+.char-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.char-avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 60%, var(--gold-hi) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  position: relative;
+  box-shadow: 0 8px 40px rgba(139,105,20,.25);
+}
+.char-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px dashed var(--accent);
+  opacity: .3;
+  animation: spin 20s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .char-avatar::after { animation: none; } }
+
+.char-info { }
+.char-name {
+  font-family: var(--ff-heb);
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.char-role {
+  font-size: 13px;
+  color: var(--text-3);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  font-family: var(--ff-mon);
+}
+.char-traits {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.char-traits li {
+  font-size: 14px;
+  color: var(--text-2);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.char-traits li::before {
+  content: '◆';
+  color: var(--accent);
+  font-size: 8px;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+/* ─── Territory ─────────────────────────────────────────────────────────── */
+.territory-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 32px;
+}
+.territory {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 24px 28px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.territory-num {
+  font-family: var(--ff-mon);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: .1em;
+  padding-top: 3px;
+}
+.territory-name {
+  font-family: var(--ff-heb);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.territory-desc {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+.territory-example {
+  font-size: 13px;
+  color: var(--text-3);
+  font-style: italic;
+  padding: 8px 12px;
+  background: var(--surface);
+  border-radius: var(--r);
+  border-right: 2px solid var(--accent-2);
+}
+
+/* ─── Risk Badge ────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--ff-mon);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.badge-low  { background: var(--low-bg);  color: var(--low); }
+.badge-med  { background: var(--med-bg);  color: var(--med); }
+
+/* ─── Service Table ─────────────────────────────────────────────────────── */
+.service-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-top: 32px;
+}
+.service-row {
+  background: var(--bg-alt);
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  gap: 16px;
+  padding: 18px 24px;
+  align-items: center;
+}
+.service-row.header {
+  background: var(--surface);
+  font-family: var(--ff-mon);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.service-name {
+  font-family: var(--ff-heb);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+.service-desc { font-size: 13px; color: var(--text-2); }
+
+/* ─── Pricing ───────────────────────────────────────────────────────────── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 36px;
+}
+.price-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px 20px;
+  text-align: center;
+  position: relative;
+  transition: box-shadow .2s;
+}
+.price-card:hover { box-shadow: 0 4px 24px rgba(139,105,20,.12); }
+.price-card.featured {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+.price-card.featured::before {
+  content: 'מומלץ';
+  position: absolute;
+  top: -12px;
+  right: 50%;
+  transform: translateX(50%);
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--ff-heb);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 100px;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+.price-vol {
+  font-family: var(--ff-heb);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-3);
+  margin-bottom: 6px;
+}
+.price-monthly {
+  font-family: var(--ff-heb);
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 4px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.price-monthly .currency {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-3);
+  vertical-align: top;
+  margin-top: 4px;
+  display: inline-block;
+}
+.price-per {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-bottom: 20px;
+  font-family: var(--ff-mon);
+}
+.price-features {
+  list-style: none;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+.price-features li::before {
+  content: '✓ ';
+  color: var(--low);
+  font-weight: 700;
+}
+
+/* ─── Add-ons ───────────────────────────────────────────────────────────── */
+.addon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+.addon-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  gap: 16px;
+}
+.addon-name {
+  font-family: var(--ff-heb);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.addon-desc { font-size: 13px; color: var(--text-2); }
+.addon-price {
+  font-family: var(--ff-mon);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── Timeline ──────────────────────────────────────────────────────────── */
+.timeline {
+  margin-top: 32px;
+  position: relative;
+  padding-right: 24px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--border) 100%);
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 32px;
+  padding-right: 28px;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  right: -9px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+}
+.tl-week {
+  font-family: var(--ff-mon);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.tl-title {
+  font-family: var(--ff-heb);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.tl-body { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+
+/* ─── Note / Compliance ─────────────────────────────────────────────────── */
+.note {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px 20px;
+  font-size: 13px;
+  color: var(--text-3);
+  line-height: 1.65;
+}
+.note strong { color: var(--text-2); }
+
+.compliance-note {
+  background: var(--low-bg);
+  border: 1px solid var(--low);
+  border-radius: var(--r);
+  padding: 20px 24px;
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--low);
+  line-height: 1.65;
+}
+.compliance-note strong { font-weight: 700; }
+
+/* ─── Signature ─────────────────────────────────────────────────────────── */
+.sig-block {
+  padding: 60px 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+@media (max-width: 560px) { .sig-block { grid-template-columns: 1fr; } }
+.sig-col { }
+.sig-label {
+  font-family: var(--ff-mon);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 12px;
+}
+.sig-line {
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 8px;
+}
+.sig-name { font-size: 14px; color: var(--text-2); }
+
+/* ─── Utilities ─────────────────────────────────────────────────────────── */
+.heb { font-family: var(--ff-heb); direction: rtl; }
+.mono { font-family: var(--ff-mon); }
+.accent { color: var(--accent); }
+.text-2 { color: var(--text-2); }
+.text-3 { color: var(--text-3); }
+.mt-sm { margin-top: 12px; }
+.mt-md { margin-top: 24px; }
+.mt-lg { margin-top: 40px; }
+hr.rule { border: none; border-top: 1px solid var(--rule); margin: 40px 0; }
+
+/* ─── Scroll progress ───────────────────────────────────────────────────── */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--gold-hi) 100%);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform .1s linear;
+  z-index: 100;
+}
+
+@media (max-width: 600px) {
+  .service-row { grid-template-columns: 1fr; }
+  .service-row.header { display: none; }
+  .pricing-grid { grid-template-columns: 1fr 1fr; }
+  .addon-row { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="prog"></div>
+
+<div class="page">
+
+  <!-- ══════════════════════════════ COVER ══════════════════════════════ -->
+  <section class="cover">
+    <div class="cover-accent-bar"></div>
+    <div class="cover-eyebrow">הצעה עסקית ושיווקית · 2026</div>
+    <div class="cover-name">
+      גת<span class="latin"> — </span><span style="font-size:.45em; font-weight:300; color:var(--text-2)">תוכנית</span>
+    </div>
+    <div class="cover-tagline">
+      אסטרטגיית מותג, ייצור תוכן אנימציה, ותוכנית שיווקית מותאמת לשוק הישראלי.
+    </div>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><strong>סוג השירות</strong>הפקת תוכן ייעוץ קריאייטיב</div>
+      <div class="cover-meta-item"><strong>שוק יעד</strong>ישראל — ערים מרכזיות</div>
+      <div class="cover-meta-item"><strong>שפה ראשית</strong>עברית · אנימציה</div>
+      <div class="cover-meta-item"><strong>תאריך</strong>אוגוסט 2026</div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ §1 · BRAND VISION ══════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">01 · חזון מותג</div>
+    <h2 class="section-title">לא מה שהמוצר אומר — מה שאתה מרגיש</h2>
+    <p class="section-intro">
+      המטרה היא לבנות מותג שהצופה מרגיש — לפני שהוא מבין. כמו Stimorol Five: שנייה וחצי של חושים מתפוצצים, בלי שמישהו אמר לך שזה טעים. הגת הוא לא מוצר שמדגמן — הוא עולם שחווים.
+    </p>
+
+    <div class="pull-quote">
+      "המותג לא מוכר. הוא מזמין."
+      <div class="sub">עיקרון יסוד — כל פיסת תוכן היא הזמנה לתוך עולם, לא פרסומת.</div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">🌿</span>
+        <div class="card-title">מורשת תימנית אותנטית</div>
+        <div class="card-body">הגת הוא טקס, לא מוצר. עם שורשים תימניים עמוקים — קהילה, חיוניות, גאווה. המותג חוגג את המסורת הזו בגאון, בלי להתנצל ובלי להסתיר.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">⚡</span>
+        <div class="card-title">אנרגיה ללא טענות</div>
+        <div class="card-body">האנרגיה, החיות, הזמן הטוב — כולם מועברים דרך אנימציה ורגש, לא דרך הצהרות. הצופה מרגיש את המוצר דרך הדמות, לא דרך שכנוע.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">😄</span>
+        <div class="card-title">הומור כשפה</div>
+        <div class="card-body">דמות אנימציה עם אופי, עם בדיחות, עם לייף — לא דובר מותג. כמו אנימציית שורותוני ביוטיוב: כיפי, מוגזם, אנושי מאוד.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎯</span>
+        <div class="card-title">ביטוי בלי הסבר</div>
+        <div class="card-body">שם המותג בלבד — ולא צריך יותר מזה. הסביבה, הדמות, המוזיקה — הכל מספר את הסיפור. התוכן לא מסביר; הוא מדגים חיים.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ §2 · THE CHARACTER ══════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">02 · דמות המותג</div>
+    <h2 class="section-title">הדמות — שגיא מנג'ה</h2>
+    <p class="section-intro">
+      מנג'ה הוא הפנים של המותג. יהודי תימני בשנות ה-40, שיק בסגנון שלו, עם אנרגיה שמדביקה את כולם. הוא לא מוכר — הוא חי, ואתה רוצה להיות בחדר איתו.
+    </p>
+
+    <div class="character-box">
+      <div class="char-visual">
+        <div class="char-avatar">🧔🏾</div>
+      </div>
+      <div class="char-info">
+        <div class="char-name">שגיא מנג'ה</div>
+        <div class="char-role">דמות המותג — גת · Manga Brand Character</div>
+        <ul class="char-traits">
+          <li>גוף מוגזם ומבוטא — אנימציה בסגנון שורותוני</li>
+          <li>לבוש מסורתי תימני + נגיעות עכשוויות</li>
+          <li>הבעות פנים מוגזמות, קומיות, עם נשמה</li>
+          <li>מדבר עברית של השכונה — לא תרגום</li>
+          <li>אף פעם לא מוכר — תמיד חי את הרגע</li>
+          <li>נוכחות דיגיטלית עקבית — אותה דמות בכל פיסת תוכן</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>עיקרון עיצובי:</strong> מנג'ה הוא ה-IP של המותג. הוא לא "דובר מותג" שמציג מוצר — הוא אישיות עצמאית שהקהל מתחבר אליה. הסיפורים שלו, האופי שלו, הבדיחות שלו — הם מה שאנשים עוקבים אחריהם. הגת הוא עולמו.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ §3 · CREATIVE STRATEGY ══════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">03 · אסטרטגיית קריאייטיב</div>
+    <h2 class="section-title">ארבעה טריטוריות יצירתיות</h2>
+    <p class="section-intro">
+      כל פיסת תוכן שייכת לאחד מארבעה עולמות. יחד הם בונים תמונה שלמה של מה שהמותג מייצג — בלי לאמר זאת במפורש.
+    </p>
+
+    <div class="territory-list">
+
+      <div class="territory">
+        <div class="territory-num">T·01</div>
+        <div>
+          <div class="territory-name">החיוניות <span class="badge badge-low">LOW RISK</span></div>
+          <div class="territory-desc">
+            אנרגיה פיזית, מהירות, תנועה. מנג'ה זז בעולם עם כוח. הזמן מואץ סביבו. הצבעים חיים. המוזיקה מטלטלת. הצופה מרגיש אנרגיה — בלי שמישהו אמר לו שהמוצר נותן אנרגיה.
+          </div>
+          <div class="territory-example">
+            דוגמה: מנג'ה קם בבוקר, השמש עולה מהר מדי, הוא מכין את עצמו לשוק — הכל ב-15 שניות של אנימציה מהירה עם ביט ים-תיכוני. מילה אחת בסוף: "גת."
+          </div>
+        </div>
+      </div>
+
+      <div class="territory">
+        <div class="territory-num">T·02</div>
+        <div>
+          <div class="territory-name">הטקס <span class="badge badge-low">LOW RISK</span></div>
+          <div class="territory-desc">
+            המסורת, הקהילה, הישיבה יחד. הקפה התימני, השיחה, הסביבה. מנג'ה מארח — לא מוכר. הגת נמצא בסצנה כחלק מחיי היום יום, לא כמוצר מוצג.
+          </div>
+          <div class="territory-example">
+            דוגמה: חברים סביב שולחן בחצר, מוזיקה תימנית ברקע, צחוק, ואיפשהו בפריים — הגת. לא focal point, חלק מהחיים. כמו פשוט להיות שם.
+          </div>
+        </div>
+      </div>
+
+      <div class="territory">
+        <div class="territory-num">T·03</div>
+        <div>
+          <div class="territory-name">הגאווה <span class="badge badge-low">LOW RISK</span></div>
+          <div class="territory-desc">
+            מורשת תימנית — מה שהסבים ידעו, מה שעוברת מדור לדור. אסתטיקה של זהב, בד, ריח, ידיים. אמוציות עמוקות בלי פאתוס. כבוד לאדמה ולמסורת.
+          </div>
+          <div class="territory-example">
+            דוגמה: מונטאז' — ידיים זקנות מול ידיים צעירות, אותה תנועה, אותה כוונה. 20 שניות ללא מילים, מוזיקה עם כינור ים-תיכוני. לוגו בסוף.
+          </div>
+        </div>
+      </div>
+
+      <div class="territory">
+        <div class="territory-num">T·04</div>
+        <div>
+          <div class="territory-name">הבדיחה <span class="badge badge-med">MEDIUM — LEGAL REVIEW</span></div>
+          <div class="territory-desc">
+            הומור ישראלי אמיתי. מנג'ה בסיטואציות קומיות, עם ייחוד תרבותי, בלי להתפקד. הדמות מעוצבת לצחוק — לא לפרסום. הרגעים הכי שיתופיים, הכי ויראליים.
+          </div>
+          <div class="territory-example">
+            דוגמה: מנג'ה מנסה להסביר לחבר אשכנזי מה זה גת — בעברית מוגזמת, עם הבעות פנים מטורפות. לא מסביר את המוצר. מסביר את התרבות.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="compliance-note">
+      <strong>הגבול הברור:</strong> כל הטריטוריות מתבססות על סיפור תרבותי אותנטי — לא על מסתור מוצר. לא נאמר "מוצר X עוזר ל..." ולא נסתיר את שם הגת. הדמות חיה בעולמה, ושם המותג נוכח. זה הבדל קריטי בין ביטוי אמנותי לניסיון לעקוף מדיניות — ואנחנו תמיד בצד הראשון.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ §4 · CHANNELS ══════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">04 · ערוצי הפצה</div>
+    <h2 class="section-title">איפה התוכן חי</h2>
+    <p class="section-intro">
+      האסטרטגיה מבוססת על ערוצים שבהם למותג יש שליטה מלאה — תוכן אורגני, לא פרסום ממומן.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">📱</span>
+        <div class="card-title">אינסטגרם / טיקטוק (אורגני)</div>
+        <div class="card-body">תוכן ריל ורטיקלי, אנימציה קצרה, תגיות תרבות ומסורת. ללא קמפיין ממומן — תוכן בלבד.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">💬</span>
+        <div class="card-title">וואטסאפ / טלגרם</div>
+        <div class="card-body">קהל ישיר — שיתוף אורגני בקבוצות, קהילת מנויים. הערוץ הכי חזק לקהל ממוקד.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌐</span>
+        <div class="card-title">אתר המותג</div>
+        <div class="card-body">בית הקריאטיב — כל הוידאו, הסיפור, הדמות. SEO בעברית, גוגל אורגני.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎪</span>
+        <div class="card-title">אירועים + OOH</div>
+        <div class="card-body">נוכחות פיזית — שוקים, אירועים תרבותיים, מסכי DOOH. התוכן הדיגיטלי מקבל חיים בעולם האמיתי.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ §5 · SERVICES ══════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">05 · שירותינו</div>
+    <h2 class="section-title">מה כולל השירות</h2>
+    <p class="section-intro">
+      אנחנו מספקים מחזור ייצור שלם — מאסטרטגיה קריאייטיב ועד עריכה סופית ומוכנה להפצה. הלקוח מקבל תוכן מוכן לפרסום, בעברית, מותאם לפלטפורמה.
+    </p>
+
+    <div class="service-grid">
+      <div class="service-row header">
+        <span>שירות</span>
+        <span>מה כלול</span>
+        <span>כלול בחבילה?</span>
+      </div>
+      <div class="service-row">
+        <div class="service-name">ייעוץ קריאייטיב</div>
+        <div class="service-desc">פיתוח קונספט, בריף, תסריט עברי, טריטוריה יצירתית</div>
+        <span class="badge badge-low">✓ כלול</span>
+      </div>
+      <div class="service-row">
+        <div class="service-name">ייצור אנימציה AI</div>
+        <div class="service-desc">יצירת קליפים Higgsfield, שיפור Magnific, עריכה CapCut</div>
+        <span class="badge badge-low">✓ כלול</span>
+      </div>
+      <div class="service-row">
+        <div class="service-name">קריינות עברית</div>
+        <div class="service-desc">קריינות AI עברית (ElevenLabs), עריכת שמע, תוצאה מוכנה</div>
+        <span class="badge badge-low">✓ כלול</span>
+      </div>
+      <div class="service-row">
+        <div class="service-name">טקסט ותגיות</div>
+        <div class="service-desc">כיתוב עברי, סאב-טייטלים, קפשן ותגיות לפלטפורמות</div>
+        <span class="badge badge-low">✓ כלול</span>
+      </div>
+      <div class="service-row">
+        <div class="service-name">בקרת תאימות</div>
+        <div class="service-desc">בדיקת כל קריאטיב מול מדיניות פלטפורמות ודיני פרסום ישראלי</div>
+        <span class="badge badge-low">✓ כלול</span>
+      </div>
+      <div class="service-row">
+        <div class="service-name">ספריית נכסים</div>
+        <div class="service-desc">שמירת "seeds" — קבצי בסיס שמאפשרים ייצור מחדש מהיר וזול</div>
+        <span class="badge badge-low">✓ כלול</span>
+      </div>
+      <div class="service-row">
+        <div class="service-name">עריכות + שינויים</div>
+        <div class="service-desc">עד 2 סבבי עריכה לכל קריאטיב לאחר מסירה</div>
+        <span class="badge badge-low">✓ כלול</span>
+      </div>
+      <div class="service-row">
+        <div class="service-name">ייעוץ משפטי תוכן</div>
+        <div class="service-desc">ביקורת משפטית לקריאטיב ברמת MEDIUM — על ידי עורך דין פרסום</div>
+        <span class="badge badge-med">אופציונלי</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ §6 · PRICING ══════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">06 · הצעת מחיר</div>
+    <h2 class="section-title">השקעה חודשית</h2>
+    <p class="section-intro">
+      המחיר מחושב לפי נפח קריאטיבים חודשי. ככל שהנפח גדול יותר — עלות הקריאטיב הבודד נמוכה יותר. אין דמי ניהול נסתרים.
+    </p>
+
+    <div class="pricing-grid">
+
+      <div class="price-card">
+        <div class="price-vol">4 קריאטיבים / חודש</div>
+        <div class="price-monthly"><span class="currency">₪</span>4,400</div>
+        <div class="price-per">₪1,100 לקריאטיב</div>
+        <ul class="price-features">
+          <li>4 סרטוני אנימציה</li>
+          <li>עברית מלאה + VO</li>
+          <li>בקרת תאימות</li>
+          <li>2 עריכות לכל סרטון</li>
+        </ul>
+      </div>
+
+      <div class="price-card">
+        <div class="price-vol">8 קריאטיבים / חודש</div>
+        <div class="price-monthly"><span class="currency">₪</span>8,000</div>
+        <div class="price-per">₪1,000 לקריאטיב</div>
+        <ul class="price-features">
+          <li>8 סרטוני אנימציה</li>
+          <li>עברית מלאה + VO</li>
+          <li>בקרת תאימות</li>
+          <li>2 עריכות לכל סרטון</li>
+        </ul>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-vol">16 קריאטיבים / חודש</div>
+        <div class="price-monthly"><span class="currency">₪</span>14,400</div>
+        <div class="price-per">₪900 לקריאטיב</div>
+        <ul class="price-features">
+          <li>16 סרטוני אנימציה</li>
+          <li>עברית מלאה + VO</li>
+          <li>4 טריטוריות יצירתיות</li>
+          <li>בקרת תאימות מלאה</li>
+          <li>ספריית נכסים בונה</li>
+          <li>דוח ביצועים חודשי</li>
+        </ul>
+      </div>
+
+      <div class="price-card">
+        <div class="price-vol">24 קריאטיבים / חודש</div>
+        <div class="price-monthly"><span class="currency">₪</span>19,680</div>
+        <div class="price-per">₪820 לקריאטיב</div>
+        <ul class="price-features">
+          <li>24 סרטוני אנימציה</li>
+          <li>עברית מלאה + VO</li>
+          <li>כל 4 טריטוריות</li>
+          <li>תאימות מלאה</li>
+          <li>עדיפות בתור ייצור</li>
+          <li>דוח ביצועים שבועי</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <hr class="rule">
+
+    <h3 class="section-title" style="font-size: 22px; margin-bottom: 16px;">תוספות ותשלומים חד-פעמיים</h3>
+
+    <div class="addon-list">
+
+      <div class="addon-row">
+        <div>
+          <div class="addon-name">הקמת מותג — חודש ראשון בלבד</div>
+          <div class="addon-desc">עיצוב דמות מנג'ה, ספריית scene seeds, הגדרת קול וקריינות, מדריך קריאטיב</div>
+        </div>
+        <div class="addon-price">₪800 – ₪1,450</div>
+      </div>
+
+      <div class="addon-row">
+        <div>
+          <div class="addon-name">ריטיינר תאימות — אופציונלי</div>
+          <div class="addon-desc">4 ביקורות משפטיות MEDIUM + מוניטורינג שוטף של מדיניות פלטפורמות</div>
+        </div>
+        <div class="addon-price">₪1,000 / חודש</div>
+      </div>
+
+      <div class="addon-row">
+        <div>
+          <div class="addon-name">קריאטיב מיוחד — 30 שניות+</div>
+          <div class="addon-desc">סרטון מורכב: עלילה מפותחת, מספר דמויות, מוזיקה מקורית</div>
+        </div>
+        <div class="addon-price">+ ₪200 – ₪350 לסרטון</div>
+      </div>
+
+      <div class="addon-row">
+        <div>
+          <div class="addon-name">גרסה נוספת לפורמט</div>
+          <div class="addon-desc">אדפטציה מ-9:16 ל-16:9 (יוטיוב / DOOH / מסך חנות)</div>
+        </div>
+        <div class="addon-price">₪180 לגרסה</div>
+      </div>
+
+    </div>
+
+    <div class="note mt-md">
+      כל המחירים כוללים מע"מ אם רלוונטי. תנאי תשלום: 50% מראש + 50% במסירה. חוזה שירות מינימלי: 3 חודשים.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ §7 · MONTH 1 PLAN ══════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">07 · תוכנית פעולה — חודש ראשון</div>
+    <h2 class="section-title">ארבעה שבועות לשגר מותג</h2>
+    <p class="section-intro">
+      בחודש הראשון בונים את הבסיס — דמות, קול, טון. מהשבוע השני כבר יש תוכן ראשון.
+    </p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-week">שבוע 01</div>
+        <div class="tl-title">בניית בסיס מותג</div>
+        <div class="tl-body">עיצוב וגיבוש דמות מנג'ה. יצירת ספריית scene seeds ראשונה (5–8 סצנות בסיס). הגדרת קול ועיצוב VO עברי. מדריך טון קריאטיב.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-week">שבוע 02</div>
+        <div class="tl-title">קריאטיב ראשון — טריטוריית "החיוניות"</div>
+        <div class="tl-body">C-01: סרטון 15 שניות, מנג'ה בבוקר. VO עברי, מוזיקה, כיתוב. בקרת תאימות. אישור לקוח. מסירה.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-week">שבוע 03</div>
+        <div class="tl-title">קריאטיב שני + שלישי — "הטקס" + "הגאווה"</div>
+        <div class="tl-body">C-02: סרטון 30 שניות, טקס משפחתי תימני. C-03: מונטאז' מורשת, 20 שניות ללא מילים. שניהם עם בקרת תאימות LOW-RISK מלאה.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-week">שבוע 04</div>
+        <div class="tl-title">קריאטיב רביעי + דוח ביצועים ראשוני</div>
+        <div class="tl-body">C-04: הומור — "הבדיחה". ביקורת משפטית MEDIUM לפני מסירה. סיכום חודש ראשון: מה עבד, מה לחדד, ספריית assets מוכנה לחודש 2.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ §8 · WHAT WE DON'T DO ══════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">08 · גבולות ברורים</div>
+    <h2 class="section-title">מה לא כלול — ולמה</h2>
+    <p class="section-intro">
+      השירות מבוסס על שקיפות מלאה. הנה הגבולות שלנו, בגלוי.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">🚫</span>
+        <div class="card-title">לא ניהול ממומן</div>
+        <div class="card-body">איננו מנהלים קמפיינים ממומנים בפלטפורמות שאוסרות פרסום מוצרי גת. כל תוכן הוא אורגני בלבד.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🚫</span>
+        <div class="card-title">לא טענות בריאות</div>
+        <div class="card-body">אף תוכן לא יכלול טענה בריאותית, תזונתית, ביצועית או רפואית — לא מפורש ולא משתמע.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🚫</span>
+        <div class="card-title">לא הסוואת מוצר</div>
+        <div class="card-body">שם המותג יהיה נוכח בתוכן. לא ננסה "להחביא" את הגת — נבטא אותו בצורה יצירתית ואותנטית.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🚫</span>
+        <div class="card-title">לא ניהול קמפיין</div>
+        <div class="card-body">אנחנו מייצרים תוכן, לא מנהלים ערוצים. ניתן להוסיף שירות ניהול ערוצים — זה נפרד.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ §9 · SIGNATURE ══════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">09 · אישור הצעה</div>
+    <h2 class="section-title">ביחד נבנה משהו שאנשים זוכרים</h2>
+    <p class="section-intro">
+      ההצעה תקפה ל-30 יום מתאריך הנפקה. לתחילת עבודה — חתימה על הסכם שירות ותשלום מקדמה ראשונה.
+    </p>
+
+    <div class="sig-block">
+      <div class="sig-col">
+        <div class="sig-label">מוציא ההצעה — הסוכנות</div>
+        <div class="sig-line"></div>
+        <div class="sig-name">חתימה ותאריך</div>
+      </div>
+      <div class="sig-col">
+        <div class="sig-label">הלקוח — גת</div>
+        <div class="sig-line"></div>
+        <div class="sig-name">חתימה ותאריך</div>
+      </div>
+    </div>
+
+    <div class="note mt-lg" style="text-align: center; margin-top: 48px; font-size: 12px;">
+      מסמך זה הוכן על ידי הסוכנות כהצעה מסחרית סודית. כל התוכן, הרעיונות, ואסטרטגיית הקריאייטיב המתוארים כאן הם קניין הסוכנות עד לחתימה על הסכם שירות. · אוגוסט 2026
+    </div>
+  </section>
+
+</div>
+
+<script>
+const prog = document.getElementById('prog');
+document.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = h.scrollTop / (h.scrollHeight - h.clientHeight);
+  prog.style.transform = `scaleX(${pct})`;
+}, { passive: true });
+</script>
+</body>
+</html>
