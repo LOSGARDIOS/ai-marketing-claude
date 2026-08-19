@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="he" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מערכת הפקה קריאטיבית — שלב 02</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Heebo:wght@300;400;500;600;700;800&display=swap">
+<style>
+/* ─── Tokens ─── */
+:root {
+  --bg:           #F7F4EF;
+  --bg-2:         #EDE9E1;
+  --bg-3:         #E2DDD4;
+  --surface:      #FFFFFF;
+  --border:       rgba(30,28,22,0.12);
+  --text:         #1E1C18;
+  --text-2:       #5A5750;
+  --text-3:       #8A8780;
+  --accent:       #9B5E28;
+  --accent-light: #B8752E;
+  --blue:         #1E4E8C;
+  --blue-bg:      #EDF2FB;
+  --blue-border:  #A0BADE;
+  --green:        #2E6B47;
+  --green-bg:     #EBF5EF;
+  --green-border: #A3C8B4;
+  --yellow:       #8C5B0E;
+  --yellow-bg:    #FDF4E3;
+  --yellow-border:#D4A54A;
+  --red:          #991F1F;
+  --red-bg:       #FDEAEA;
+  --red-border:   #D07070;
+  --mono:         'JetBrains Mono', monospace;
+  --ff-display:   'Lora', Georgia, serif;
+  --ff-body:      'DM Sans', system-ui, sans-serif;
+  --ff-heb:       'Heebo', 'Arial Hebrew', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:           #15130E;
+    --bg-2:         #1D1B14;
+    --bg-3:         #252219;
+    --surface:      #1D1B14;
+    --border:       rgba(240,235,220,0.10);
+    --text:         #EAE6DC;
+    --text-2:       #A09A8E;
+    --text-3:       #6A6560;
+    --accent:       #D4853B;
+    --accent-light: #E09B50;
+    --blue:         #6B9DD4;
+    --blue-bg:      rgba(30,78,140,0.15);
+    --blue-border:  rgba(107,157,212,0.30);
+    --green:        #5DBF88;
+    --green-bg:     rgba(55,120,80,0.15);
+    --green-border: rgba(93,191,136,0.30);
+    --yellow:       #D4A03A;
+    --yellow-bg:    rgba(180,130,30,0.12);
+    --yellow-border:rgba(212,160,58,0.35);
+    --red:          #E06060;
+    --red-bg:       rgba(180,50,50,0.12);
+    --red-border:   rgba(224,96,96,0.30);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg:           #15130E;
+  --bg-2:         #1D1B14;
+  --bg-3:         #252219;
+  --surface:      #1D1B14;
+  --border:       rgba(240,235,220,0.10);
+  --text:         #EAE6DC;
+  --text-2:       #A09A8E;
+  --text-3:       #6A6560;
+  --accent:       #D4853B;
+  --accent-light: #E09B50;
+  --blue:         #6B9DD4;
+  --blue-bg:      rgba(30,78,140,0.15);
+  --blue-border:  rgba(107,157,212,0.30);
+  --green:        #5DBF88;
+  --green-bg:     rgba(55,120,80,0.15);
+  --green-border: rgba(93,191,136,0.30);
+  --yellow:       #D4A03A;
+  --yellow-bg:    rgba(180,130,30,0.12);
+  --yellow-border:rgba(212,160,58,0.35);
+  --red:          #E06060;
+  --red-bg:       rgba(180,50,50,0.12);
+  --red-border:   rgba(224,96,96,0.30);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: var(--ff-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-weight: 400;
+  font-size: 0.9375rem;
+}
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 3.5rem 0; border-bottom: 1px solid var(--border); }
+section:last-of-type { border-bottom: none; }
+
+h1,h2,h3,h4,h5 { font-family: var(--ff-display); font-weight: 600; text-wrap: balance; color: var(--text); }
+h2 { font-size: 1.45rem; margin-bottom: 1.5rem; }
+h3 { font-size: 1.1rem; margin-bottom: 1rem; margin-top: 2rem; }
+h3:first-child { margin-top: 0; }
+h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
+p { color: var(--text-2); margin-bottom: 1rem; line-height: 1.7; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--accent); }
+
+/* ─── Header ─── */
+.sys-header {
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 0;
+}
+.sys-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.sys-id {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.phase-badge {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 3px;
+  padding: 0.2rem 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.sys-title { font-size: 1.75rem; margin-top: 0.75rem; margin-bottom: 0.25rem; }
+.sys-subtitle { color: var(--text-2); font-size: 0.9rem; }
+
+/* ─── Update banner ─── */
+.update-banner {
+  background: var(--blue-bg);
+  border: 1px solid var(--blue-border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+  font-size: 0.85rem;
+  color: var(--blue);
+}
+.update-banner strong { display: block; margin-bottom: 0.25rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ─── Update list ─── */
+.update-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.update-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 0.82rem;
+}
+.update-item .u-num {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+.update-item .u-name { font-weight: 600; margin-bottom: 0.25rem; font-size: 0.85rem; }
+.update-item .u-desc { color: var(--text-2); font-size: 0.8rem; line-height: 1.5; }
+
+/* ─── Hebrew block ─── */
+.heb-block {
+  direction: rtl;
+  font-family: var(--ff-heb);
+  text-align: right;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+.heb-block p { color: var(--text-2); }
+.heb-principle { margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+.heb-principle:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.heb-label { font-size: 0.72rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; direction: ltr; text-align: left; font-family: var(--ff-body); }
+.heb-h { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
+.heb-sub { font-size: 0.85rem; color: var(--text-2); margin-bottom: 0.6rem; }
+
+/* ─── Two-col ─── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+@media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+/* ─── Tables ─── */
+.table-wrap { overflow-x: auto; margin-bottom: 1.5rem; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+th { background: var(--bg-2); font-weight: 600; text-align: left; padding: 0.6rem 0.85rem; border-bottom: 2px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); }
+td { padding: 0.6rem 0.85rem; border-bottom: 1px solid var(--border); color: var(--text-2); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg-2); }
+
+/* ─── Risk badges ─── */
+.risk { display: inline-block; font-family: var(--mono); font-size: 0.65rem; font-weight: 500; border-radius: 3px; padding: 0.15rem 0.5rem; text-transform: uppercase; letter-spacing: 0.07em; }
+.risk-low  { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.risk-med  { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow-border); }
+.risk-high { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+
+/* ─── Tool comparison ─── */
+.tool-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.tool-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  background: var(--surface);
+  font-size: 0.82rem;
+}
+.tool-card.recommended { border-color: var(--accent); }
+.tool-badge {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+.tool-badge.rec { color: var(--accent); }
+.tool-badge.alt { color: var(--text-3); }
+.tool-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem; }
+.tool-cost { font-family: var(--mono); color: var(--accent); font-size: 0.8rem; }
+.tool-note { color: var(--text-2); font-size: 0.78rem; margin-top: 0.35rem; line-height: 1.5; }
+
+/* ─── Production card ─── */
+.prod-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+.prod-card-header {
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.prod-num {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.25rem;
+}
+.prod-title-wrap .prod-name {
+  font-family: var(--ff-heb);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+  direction: rtl;
+  margin-bottom: 0.2rem;
+}
+.prod-title-wrap .prod-english { font-size: 0.8rem; color: var(--text-2); }
+.prod-type-row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-top: 0.5rem; }
+.prod-type-tag {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  background: var(--bg-3);
+  color: var(--text-2);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  text-transform: uppercase;
+}
+.prod-body { padding: 1.5rem; }
+.prod-section { margin-bottom: 1.75rem; }
+.prod-section:last-child { margin-bottom: 0; }
+.prod-section-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ─── Script timeline ─── */
+.timeline { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.timeline th {
+  background: var(--bg-3);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--border);
+  text-align: left;
+}
+.timeline td {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.6;
+}
+.timeline td:first-child {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  white-space: nowrap;
+  font-weight: 500;
+  width: 80px;
+}
+.timeline .heb-line {
+  direction: rtl;
+  font-family: var(--ff-heb);
+  text-align: right;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.timeline .eng-line {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  font-style: italic;
+  display: block;
+}
+.timeline .visual-line {
+  color: var(--text-2);
+  font-size: 0.8rem;
+}
+
+/* ─── Cost rows ─── */
+.cost-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+@media (max-width: 640px) { .cost-grid { grid-template-columns: 1fr 1fr; } }
+.cost-cell {
+  background: var(--bg-2);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+}
+.cost-cell .cc-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-3); margin-bottom: 0.2rem; }
+.cost-cell .cc-val { font-family: var(--mono); font-size: 0.95rem; font-weight: 500; color: var(--text); }
+.cost-cell .cc-usd { font-size: 0.7rem; color: var(--text-3); margin-top: 0.1rem; }
+.cost-highlight { border: 1px solid var(--accent); background: var(--surface); }
+.cost-highlight .cc-val { color: var(--accent); }
+
+/* ─── Weekly pipeline ─── */
+.pipeline-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+  background: var(--surface);
+}
+.pipeline-slot {
+  background: var(--bg-2);
+  border-right: 1px solid var(--border);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.25rem;
+}
+.pipeline-slot .slot-num { font-family: var(--mono); font-size: 0.65rem; color: var(--text-3); }
+.pipeline-slot .slot-type { font-weight: 700; font-size: 0.75rem; color: var(--text); }
+.pipeline-desc { padding: 1rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.pipeline-desc strong { font-size: 0.88rem; }
+.pipeline-desc p { font-size: 0.8rem; margin: 0; }
+
+/* ─── Pricing table ─── */
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.price-tier {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.price-tier.featured { border-color: var(--accent); }
+.price-tier-head {
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.25rem;
+}
+.price-tier.featured .price-tier-head { background: var(--accent); color: #fff; }
+.price-tier.featured .price-tier-head * { color: #fff !important; }
+.pt-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-3); margin-bottom: 0.2rem; }
+.pt-name { font-family: var(--ff-display); font-size: 1.05rem; font-weight: 600; }
+.price-tier-body { padding: 1.25rem; }
+.price-main {
+  font-family: var(--ff-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.price-featured .price-main { color: var(--accent); }
+.price-unit { font-size: 0.78rem; color: var(--text-2); margin-bottom: 0.25rem; }
+.price-usd { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); margin-bottom: 1rem; }
+.price-breakdown { font-size: 0.8rem; color: var(--text-2); line-height: 1.9; }
+.price-breakdown li { margin-left: 1rem; }
+.price-note { font-size: 0.75rem; color: var(--text-3); margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); line-height: 1.6; }
+
+/* ─── Callout ─── */
+.callout {
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+}
+.callout.green { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
+.callout.yellow { background: var(--yellow-bg); border: 1px solid var(--yellow-border); color: var(--yellow); }
+.callout.red { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
+.callout.blue { background: var(--blue-bg); border: 1px solid var(--blue-border); color: var(--blue); }
+.callout strong { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+
+/* ─── Footer ─── */
+.doc-footer { background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; font-size: 0.78rem; color: var(--text-3); }
+.doc-footer strong { color: var(--text-2); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="sys-header">
+  <div class="wrap">
+    <div class="sys-meta">
+      <span class="sys-id">Regulated Creative System · Israel Market · גת / Khat</span>
+      <span class="phase-badge">Phase 02 — Operations</span>
+    </div>
+    <h1 class="sys-title">מערכת הפקה קריאטיבית מוסדרת</h1>
+    <p class="sys-subtitle">Israel · Hebrew-First · Animation-First · Q3–Q4 2026</p>
+  </div>
+</header>
+
+<!-- SYSTEM UPDATE -->
+<section>
+  <div class="wrap">
+    <div class="update-banner">
+      <strong>System Update — Phase 02</strong>
+      This document integrates 15 operational updates into the existing Phase 01 intelligence framework. It does not replace Phase 01 — it extends it into an active production system. Read Phase 01 before this document if you have not already done so.
+    </div>
+
+    <h2>15 System Updates Integrated</h2>
+    <div class="update-grid">
+      <div class="update-item"><div class="u-num">01</div><div class="u-name">Israel First</div><div class="u-desc">All strategy, regulation, language and pricing are now calibrated to the Israeli market.</div></div>
+      <div class="update-item"><div class="u-num">02</div><div class="u-name">Hebrew-First</div><div class="u-desc">All consumer-facing copy is written in natural Israeli Hebrew. English is for internal reference only.</div></div>
+      <div class="update-item"><div class="u-num">03</div><div class="u-name">Full Scripts</div><div class="u-desc">Every video creative includes a complete Hebrew script with timed storyboard, voiceover, and on-screen text.</div></div>
+      <div class="update-item"><div class="u-num">04</div><div class="u-name">Animation-First</div><div class="u-desc">Primary production method is 2D/3D animation and AI-generated visuals. No reliance on filmed actors.</div></div>
+      <div class="update-item"><div class="u-num">05</div><div class="u-name">Cost-Efficient AI</div><div class="u-desc">Simplest and cheapest capable tool is selected first. Expensive models require justification.</div></div>
+      <div class="update-item"><div class="u-num">06</div><div class="u-name">Efficiency Formula</div><div class="u-desc">Quality × Compliance × Speed × Cost. Not just quality alone.</div></div>
+      <div class="update-item"><div class="u-num">07</div><div class="u-name">Animation Styles</div><div class="u-desc">Cinematic, Surreal, Character, Transformation, Macro, Typography, Comedy, Mystery — mapped per concept.</div></div>
+      <div class="update-item"><div class="u-num">08</div><div class="u-name">Risk Classification</div><div class="u-desc">Every creative assigned LOW / MEDIUM / HIGH policy risk. HIGH not recommended for any advertising.</div></div>
+      <div class="update-item"><div class="u-num">09</div><div class="u-name">Abstraction vs. Concealment</div><div class="u-desc">Creative abstraction is encouraged. Deliberate product concealment to evade moderation is prohibited.</div></div>
+      <div class="update-item"><div class="u-num">10</div><div class="u-name">Product Communication</div><div class="u-desc">Each concept declares what the viewer understands, when, and whether the impression could be misleading.</div></div>
+      <div class="update-item"><div class="u-num">11</div><div class="u-name">Weekly Pipeline</div><div class="u-desc">Safe Winner + Story + Performance Variation + Experiment. 4 creatives per week, intelligently structured.</div></div>
+      <div class="update-item"><div class="u-num">12</div><div class="u-name">Cost Report</div><div class="u-desc">AI cost + human labor + editing + revision allowance + one-time vs. reusable assets clearly separated.</div></div>
+      <div class="update-item"><div class="u-num">13</div><div class="u-name">Israeli Pricing (₪)</div><div class="u-desc">Client pricing adapted to Israeli market. Primary currency is NIS. USD equivalent shown for reference.</div></div>
+      <div class="update-item"><div class="u-num">14</div><div class="u-name">Production Card</div><div class="u-desc">Standardized output format for every creative, ready to hand directly to animator or video editor.</div></div>
+      <div class="update-item"><div class="u-num">15</div><div class="u-name">CD Pipeline Logic</div><div class="u-desc">System operates as a Creative Director: reviews history, identifies gaps, avoids repetition, iterates.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1: ISRAEL MARKET CONTEXT -->
+<section>
+  <div class="wrap">
+    <h2>01 — Israel Market Context</h2>
+
+    <div class="callout yellow">
+      <strong>Critical Gate — Retained from Phase 01</strong>
+      Khat beverages and extracts are illegal in Israel. Only fresh/dried khat leaves are legal. Creative must not promote, imply, or be associated with khat beverage products. This gate applies before any creative decision.
+    </div>
+
+    <h3>Legal &amp; Regulatory Landscape (Israel)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Area</th><th>Status</th><th>Source</th><th>Implication</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Fresh khat leaves — possession</td><td style="color:var(--green)">Legal</td><td>Israeli law (not scheduled substance)</td><td>Product can be sold; advertising scope is the variable</td></tr>
+          <tr><td>Khat beverages / extracts</td><td style="color:var(--red)">Illegal</td><td>Enforcement actions, Ministry of Health</td><td>Hard exclusion from product line and creative</td></tr>
+          <tr><td>Health claims for khat</td><td style="color:var(--red)">Prohibited</td><td>Israeli Consumer Protection Law + MOH</td><td>No health, therapeutic, or performance claims in any medium</td></tr>
+          <tr><td>Food/botanical product advertising</td><td style="color:var(--green)">Permitted</td><td>General Israeli advertising law</td><td>Taste, origin, cultural, sensory claims are permissible</td></tr>
+          <tr><td>Age restrictions</td><td style="color:var(--yellow)">Verify</td><td>UNVERIFIED — requires legal source check</td><td>Check whether khat marketing requires age-gating or minimum age messaging</td></tr>
+          <tr><td>OOH/DOOH advertising</td><td style="color:var(--yellow)">Verify</td><td>UNVERIFIED — municipality and media owner policies vary</td><td>Confirm before booking any outdoor placements</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Israeli Consumer Segments for Khat</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Segment</th><th>Size Est.</th><th>Cultural Context</th><th>Creative Approach</th></tr></thead>
+        <tbody>
+          <tr><td>Ethiopian-Israeli community</td><td>~170,000</td><td>Khat central to social and ceremonial culture; long tradition</td><td>Heritage, community, authenticity — highest cultural resonance</td></tr>
+          <tr><td>Yemenite-Israeli community</td><td>~450,000 (ancestry)</td><td>Historical khat use in Yemen; present-day connection varies</td><td>Roots, tradition, rediscovery framing</td></tr>
+          <tr><td>Other Mizrahi communities</td><td>—</td><td>Exposure through cultural proximity</td><td>Curiosity, social discovery</td></tr>
+          <tr><td>General Israeli consumer</td><td>—</td><td>Mostly unfamiliar; growing interest in botanical wellness</td><td>Novel botanical, craft product, cultural education</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Available Advertising Channels (Israel, Khat)</h3>
+    <div class="callout blue">
+      <strong>Reminder — Phase 01 Finding</strong>
+      All major digital advertising platforms (Meta, Google, TikTok, YouTube, Snapchat, X, Pinterest) universally prohibit khat advertising regardless of Israeli legal status. Available channels are owned, earned, and local.
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Channel</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Owned website</td><td><span class="risk risk-low">LOW RISK</span></td><td>Full creative freedom within Israeli advertising law. No platform policy applies.</td></tr>
+          <tr><td>Email / WhatsApp newsletter</td><td><span class="risk risk-low">LOW RISK</span></td><td>Opted-in audience. Applies Israeli anti-spam law (SPAM). Highest conversion context.</td></tr>
+          <tr><td>Organic social (Instagram, Facebook, TikTok)</td><td><span class="risk risk-low">LOW RISK</span></td><td>Organic posts for established legal products are generally permitted. No paid boost. Monitor community guidelines.</td></tr>
+          <tr><td>WhatsApp community group</td><td><span class="risk risk-low">LOW RISK</span></td><td>Direct, high-engagement, zero platform ad policy.</td></tr>
+          <tr><td>Local Israeli web portals</td><td><span class="risk risk-med">VERIFY</span></td><td>Ynet, Walla!, Mako, etc. — contact editorial/ad sales directly. Policy varies by portal.</td></tr>
+          <tr><td>OOH/DOOH (billboards, urban screens)</td><td><span class="risk risk-med">VERIFY</span></td><td>Check municipality policy and media owner T&amp;Cs before purchasing.</td></tr>
+          <tr><td>Events and experiential</td><td><span class="risk risk-low">LOW RISK</span></td><td>Street markets, community events — strong cultural fit. Confirm venue permissions.</td></tr>
+          <tr><td>PR / editorial</td><td><span class="risk risk-low">LOW RISK</span></td><td>Earned media. Food, culture, lifestyle journalists. High credibility.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: HEBREW FIRST -->
+<section>
+  <div class="wrap">
+    <h2>02 — עברית ראשה (Hebrew-First Creative Principles)</h2>
+    <p>All consumer-facing copy is written in natural spoken Israeli Hebrew. English appears in this document for internal context only. The following principles govern Hebrew creative writing for this account.</p>
+
+    <div class="heb-block">
+      <div class="heb-principle">
+        <div class="heb-label">Principle 1 — Natural Israeli Spoken Hebrew</div>
+        <div class="heb-h">עברית ישראלית מדוברת — לא עברית שיווקית מתורגמת</div>
+        <p>כל הטקסט נכתב כאילו מישהו ישראלי אמיתי אומר אותו בקול. לא "לחוויה בלתי נשכחת" — אלא "כי פשוט שווה". לא "המוצר המובחר שלנו" — אלא "זה הטוב ביותר שיש".</p>
+      </div>
+      <div class="heb-principle">
+        <div class="heb-label">Principle 2 — Short. Direct. Israeli.</div>
+        <div class="heb-h">קצר. ישיר. ישראלי.</div>
+        <p>ישראלים לא אוהבים פרסומת ארוכה ומסורבלת. כל משפט צריך לעמוד לבד. אם ניתן לגזום מילה — גוזמים. הסגנון: שיחתי, ישיר, לפעמים מתוחכם, לפעמים הומוריסטי.</p>
+      </div>
+      <div class="heb-principle">
+        <div class="heb-label">Principle 3 — Cultural References</div>
+        <div class="heb-h">מציאות ישראלית — לא אמריקאית</div>
+        <p>ההפניות הן ישראליות. שישי אחר הצהריים. שוק הכרמל. ביתא ישראל. קהילה. שורשים. אוכל. ריחות. לא "lifestyle". לא "wellness journey". לא "take your life to the next level".</p>
+      </div>
+      <div class="heb-principle">
+        <div class="heb-label">Principle 4 — Humor When Appropriate</div>
+        <div class="heb-h">הומור ישראלי — כאשר מתאים</div>
+        <p>הומור ישראלי הוא ציני, מהיר, ועושה קצת כאב. אם הקונספט מתאים לאירוניה — לוקחים אותה עד הסוף. לא חצי הומור, לא מנומס מדי.</p>
+      </div>
+      <div class="heb-principle">
+        <div class="heb-label">Principle 5 — What We Never Say</div>
+        <div class="heb-h">מה שאסור לכתוב</div>
+        <p>אסור: טענות בריאות ("מגביר אנרגיה", "משפר מצב רוח", "מחזק מערכת החיסון"), טענות ביצועים, הפניות לאפקטים פסיכואקטיביים, השוואות תזונתיות, שפה שיכולה להתפרש כפרסום סם.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: ANIMATION-FIRST STACK -->
+<section>
+  <div class="wrap">
+    <h2>03 — Animation-First Production Stack</h2>
+    <p>Primary production method is animation and AI-generated visuals. This eliminates dependency on actors, filming days, location permits, and physical production logistics. Creatives can be produced faster, cheaper, and iterated without a reshoot.</p>
+
+    <h3>Animation Style Catalogue</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Style</th><th>Best For</th><th>Complexity</th><th>Primary Tool</th><th>Est. Cost (₪/creative)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Cinematic CGI</strong></td><td>Hero brand moments, product reveals</td><td>High</td><td>Blender + Runway</td><td>4,000–8,000</td></tr>
+          <tr><td><strong>2D Character</strong></td><td>Story-based, humor, community</td><td>Medium</td><td>Adobe Animate / Cavalry + AI backgrounds</td><td>2,500–5,000</td></tr>
+          <tr><td><strong>Kinetic Typography</strong></td><td>Short punchy messaging, hooks</td><td>Low–Medium</td><td>After Effects / Rive</td><td>800–2,000</td></tr>
+          <tr><td><strong>AI-Generated Sequence</strong></td><td>Mood, atmosphere, visual storytelling</td><td>Low</td><td>Midjourney + Runway / Kling / Pika</td><td>600–1,800</td></tr>
+          <tr><td><strong>Product 3D Animation</strong></td><td>Product hero, premium brand feel</td><td>Medium–High</td><td>Blender + HDRI environments</td><td>3,000–7,000</td></tr>
+          <tr><td><strong>Surreal / Morphing</strong></td><td>Curiosity hook, experiential</td><td>Medium</td><td>Runway Gen-3 / Haiper / ComfyUI</td><td>1,500–3,500</td></tr>
+          <tr><td><strong>Macro World</strong></td><td>Product texture, sensory appeal</td><td>Low</td><td>Midjourney Macro prompts + Runway</td><td>800–2,000</td></tr>
+          <tr><td><strong>Comedy Character</strong></td><td>Israeli humor, social virality</td><td>Medium</td><td>2D rigged character (Spine/Animate)</td><td>2,000–4,500</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Tool Selection Philosophy</h3>
+    <div class="callout blue">
+      <strong>Rule</strong>
+      Before selecting a tool, ask: "What is the simplest and cheapest tool capable of producing the required quality?" Do not use an expensive model because it is more powerful. Use it because the simpler alternative genuinely cannot match the required output.
+    </div>
+
+    <h3>Primary Tool Stack (Cost-Optimized)</h3>
+    <div class="tool-row">
+      <div class="tool-card recommended">
+        <div class="tool-badge rec">Recommended · Image Generation</div>
+        <div class="tool-name">Flux 1.1 Pro (via API)</div>
+        <div class="tool-cost">~$0.04/image · ≈ ₪0.15/image</div>
+        <div class="tool-note">High quality, fast, cheap. Best ratio for batch generation. Use for 80% of AI image needs.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-badge alt">Alternative · Image Generation</div>
+        <div class="tool-name">Midjourney Pro</div>
+        <div class="tool-cost">$60/month · ≈ ₪222/month</div>
+        <div class="tool-note">Better for complex art direction, editorial look. Use only when Flux output is insufficient.</div>
+      </div>
+    </div>
+    <div class="tool-row">
+      <div class="tool-card recommended">
+        <div class="tool-badge rec">Recommended · Video Generation</div>
+        <div class="tool-name">Kling AI 1.6</div>
+        <div class="tool-cost">$8–30/month · ≈ ₪30–110/month</div>
+        <div class="tool-note">Best quality-per-cost for short clips (5–10 sec). Handles motion well. Strong for product and nature shots.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-badge alt">Alternative · Video Generation</div>
+        <div class="tool-name">Runway Gen-3 Alpha</div>
+        <div class="tool-cost">$35–95/month · ≈ ₪130–350/month</div>
+        <div class="tool-note">Use for complex camera movement, cinematic look, or when Kling motion is insufficient.</div>
+      </div>
+    </div>
+    <div class="tool-row">
+      <div class="tool-card recommended">
+        <div class="tool-badge rec">Recommended · Hebrew Voiceover</div>
+        <div class="tool-name">ElevenLabs (Hebrew voices)</div>
+        <div class="tool-cost">$22/month · ≈ ₪81/month</div>
+        <div class="tool-note">Best natural-sounding Hebrew TTS. Select "Alon" or "Noa" voices. Always review output with native speaker.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-badge alt">Alternative · Hebrew Voiceover</div>
+        <div class="tool-name">Google Cloud TTS (Hebrew)</div>
+        <div class="tool-cost">~$0.004/1K chars · effectively free at this volume</div>
+        <div class="tool-note">Less natural but acceptable for kinetic typography or where voice is secondary to music.</div>
+      </div>
+    </div>
+    <div class="tool-row">
+      <div class="tool-card recommended">
+        <div class="tool-badge rec">Recommended · Animation Assembly</div>
+        <div class="tool-name">Adobe After Effects</div>
+        <div class="tool-cost">Part of CC · ~₪220/month</div>
+        <div class="tool-note">Industry standard for motion graphics and compositing. Best for kinetic typography and complex sequences.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-badge alt">Alternative · Animation Assembly</div>
+        <div class="tool-name">DaVinci Resolve (Free)</div>
+        <div class="tool-cost">Free · ₪0</div>
+        <div class="tool-note">Fully capable for cuts, color, and basic compositing. Fusion for motion graphics. Use when AE is not available.</div>
+      </div>
+    </div>
+
+    <h3>Reusable Asset Strategy</h3>
+    <p>Certain assets, once created, reduce cost across all future creatives. Track these separately from per-creative costs.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Asset Type</th><th>One-Time Cost (₪)</th><th>Reusable For</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>3D khat product model (branch + leaves)</td><td>1,800–3,500</td><td>All future product shots and animations</td><td>Eliminates photography need; consistent brand look</td></tr>
+          <tr><td>Brand environment / scene (kitchen, gathering table)</td><td>2,000–4,000</td><td>All character story creatives</td><td>Set consistency; fast character placement</td></tr>
+          <tr><td>Hebrew kinetic typography system (font, motion, timing)</td><td>800–1,500</td><td>All kinetic typography concepts</td><td>Consistent brand voice in motion; reuse for 10–20 creatives</td></tr>
+          <tr><td>Character rig (animated persona)</td><td>3,000–6,000</td><td>All character-based creatives</td><td>Significant cost reduction from 3rd creative onward</td></tr>
+          <tr><td>Licensed background music pack</td><td>400–1,200</td><td>Multiple creatives</td><td>Consistent sonic identity; no per-use licensing fees</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: POLICY RISK FRAMEWORK -->
+<section>
+  <div class="wrap">
+    <h2>04 — Policy Risk Framework</h2>
+    <p>Every creative concept is assigned a policy risk level. This applies to the channels where the content will be distributed (owned, organic, local portal, OOH) — not hypothetical paid platforms that are categorically unavailable for khat.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Level</th><th>Definition</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="risk risk-low">LOW</span></td>
+            <td>Content depicts cultural, sensory, origin, or community aspects. No health, therapeutic, or performance claims. No regulatory ambiguity. Compliant with Israeli advertising law as written.</td>
+            <td>Proceed to production. Standard compliance review before publication.</td>
+          </tr>
+          <tr>
+            <td><span class="risk risk-med">MEDIUM</span></td>
+            <td>Content contains elements that could be interpreted as implying benefits beyond taste/culture. Wording or imagery is ambiguous under Israeli Consumer Protection Law. Requires deliberate framing.</td>
+            <td>Produce only when strategically justified. Require legal review before publication. Document the compliance rationale.</td>
+          </tr>
+          <tr>
+            <td><span class="risk risk-high">HIGH</span></td>
+            <td>Content makes explicit or strongly implied health/performance/stimulant claims. Could attract MOH attention or constitute misleading advertising under Israeli law. Clearly deceptive framing.</td>
+            <td>Do not produce. Do not publish. Flag and remove from pipeline.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Risk Triggers — What Creates MEDIUM or HIGH Risk</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Element</th><th>Risk Level</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Mention of energy, alertness, focus, mood</td><td><span class="risk risk-high">HIGH</span></td><td>Direct or implied stimulant / performance claim</td></tr>
+          <tr><td>"Your body already knows" / "feel the difference"</td><td><span class="risk risk-high">HIGH</span></td><td>Implies physiological effect — prohibited health claim</td></tr>
+          <tr><td>Productivity / work / meetings framing</td><td><span class="risk risk-med">MEDIUM</span></td><td>Could imply performance benefit; ambiguous</td></tr>
+          <tr><td>Before/after visual transformation of a person</td><td><span class="risk risk-high">HIGH</span></td><td>Classic prohibited comparative advertising format</td></tr>
+          <tr><td>Social gathering — energy/liveliness in group</td><td><span class="risk risk-med">MEDIUM</span></td><td>Lively group setting could imply stimulant effect</td></tr>
+          <tr><td>Botanical heritage, origin story, harvest</td><td><span class="risk risk-low">LOW</span></td><td>Cultural and provenance claims — fully permissible</td></tr>
+          <tr><td>Taste, aroma, texture, sensory experience</td><td><span class="risk risk-low">LOW</span></td><td>Sensory claims — permissible for food/botanical products</td></tr>
+          <tr><td>Family, tradition, memory, community</td><td><span class="risk risk-low">LOW</span></td><td>Cultural/emotional framing — permissible</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: WEEKLY PIPELINE -->
+<section>
+  <div class="wrap">
+    <h2>05 — Four-Creative Weekly Pipeline</h2>
+    <p>Each weekly batch is structured across four creative roles. The distribution can shift based on performance data. In weeks without data (Week 1), defaults apply as shown below.</p>
+
+    <div class="pipeline-row">
+      <div class="pipeline-slot"><div class="slot-num">C-01</div><div class="slot-type">SAFE WINNER</div></div>
+      <div class="pipeline-desc">
+        <strong>Low risk + highest commercial potential</strong>
+        <p>The concept most likely to perform well and generate real audience response. Proven format, clear product communication, no policy ambiguity. This is the creative the week is measured by.</p>
+      </div>
+    </div>
+    <div class="pipeline-row">
+      <div class="pipeline-slot"><div class="slot-num">C-02</div><div class="slot-type">STORY</div></div>
+      <div class="pipeline-desc">
+        <strong>Animation-based storytelling — emotional connection</strong>
+        <p>A narrative concept that builds brand relationship, not just product awareness. Can be longer (25–45 sec). Measures depth of engagement, not just reach.</p>
+      </div>
+    </div>
+    <div class="pipeline-row">
+      <div class="pipeline-slot"><div class="slot-num">C-03</div><div class="slot-type">VARIATION</div></div>
+      <div class="pipeline-desc">
+        <strong>Performance variation of the best existing concept</strong>
+        <p>Week 1: variation of C-01 (different hook, same core idea). Week 3+: variation of the actual top-performing creative from prior weeks. Tests whether the concept is format-dependent or inherently strong.</p>
+      </div>
+    </div>
+    <div class="pipeline-row">
+      <div class="pipeline-slot"><div class="slot-num">C-04</div><div class="slot-type">EXPERIMENT</div></div>
+      <div class="pipeline-desc">
+        <strong>Unusual concept — within policy boundaries</strong>
+        <p>A creative territory or format we have not tried. Can be MEDIUM risk if there is a strong strategic reason. Must still be honest, non-deceptive, and within Israeli advertising law. This is where innovation comes from.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: ISRAELI PRICING -->
+<section>
+  <div class="wrap">
+    <h2>06 — תמחור שוק ישראלי (Israeli Market Pricing)</h2>
+    <p>All pricing is in Israeli New Shekel (₪). US Dollar equivalents are shown at a reference rate of ~3.7 NIS/USD. Regulated-product compliance overhead adds approximately 25–30% to standard creative agency rates.</p>
+
+    <h3>Internal Production Cost per Creative (AI-Assisted)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Cost Component</th><th>Lean</th><th>Professional</th><th>Premium</th></tr></thead>
+        <tbody>
+          <tr><td>AI generation (image + video tools)</td><td>₪100–250</td><td>₪300–700</td><td>₪700–2,200</td></tr>
+          <tr><td>Human creative (concept, script, direction)</td><td>₪300–500</td><td>₪1,200–2,500</td><td>₪4,000–8,000</td></tr>
+          <tr><td>Assembly, editing, compositing</td><td>₪200–400</td><td>₪600–1,200</td><td>₪1,500–3,000</td></tr>
+          <tr><td>Voiceover + sound design</td><td>₪100–200</td><td>₪300–700</td><td>₪800–2,000</td></tr>
+          <tr><td>Compliance review</td><td>₪150–300</td><td>₪300–600</td><td>₪600–1,500</td></tr>
+          <tr><td>Revision allowance (1 round)</td><td>₪150–250</td><td>₪400–800</td><td>₪1,000–2,500</td></tr>
+          <tr><td>Waste factor (25–40% generation overhead)</td><td>₪250–425</td><td>₪776–1,501</td><td>₪2,151–5,300</td></tr>
+          <tr style="font-weight:600;"><td>Total production cost per creative</td><td>₪1,250–2,325</td><td>₪3,876–8,001</td><td>₪10,751–24,500</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Client Pricing (Weekly — 4 Creatives)</h3>
+    <div class="price-grid">
+      <div class="price-tier">
+        <div class="price-tier-head">
+          <div class="pt-label">Package A</div>
+          <div class="pt-name">Lean Digital</div>
+        </div>
+        <div class="price-tier-body">
+          <div class="price-main">₪12,000</div>
+          <div class="price-unit">per week / 4 creatives</div>
+          <div class="price-usd">≈ $3,240 USD</div>
+          <ul class="price-breakdown">
+            <li>4 AI-assisted animated creatives</li>
+            <li>Hebrew scripts and copy included</li>
+            <li>1 revision round per creative</li>
+            <li>Basic compliance review</li>
+            <li>Owned channel formats only</li>
+          </ul>
+          <div class="price-note">
+            Cost: ~₪5,000–9,300 · Margin: ~35–58%<br>
+            Minimum viable price: ₪8,000/week<br>
+            Recommended: ₪12,000/week<br>
+            Premium: ₪16,000/week
+          </div>
+        </div>
+      </div>
+      <div class="price-tier featured">
+        <div class="price-tier-head">
+          <div class="pt-label">Package B · Recommended</div>
+          <div class="pt-name">Professional Studio</div>
+        </div>
+        <div class="price-tier-body">
+          <div class="price-main">₪32,000</div>
+          <div class="price-unit">per week / 4 creatives</div>
+          <div class="price-usd">≈ $8,650 USD</div>
+          <ul class="price-breakdown">
+            <li>4 professionally animated creatives</li>
+            <li>Full Hebrew script + storyboard</li>
+            <li>2 revision rounds per creative</li>
+            <li>Legal compliance review</li>
+            <li>Multi-format delivery (vertical, square)</li>
+            <li>Monthly performance analysis</li>
+          </ul>
+          <div class="price-note">
+            Cost: ~₪15,500–32,000 · Margin: ~0–50%<br>
+            Minimum viable price: ₪22,000/week<br>
+            Recommended: ₪32,000/week<br>
+            Premium: ₪45,000/week
+          </div>
+        </div>
+      </div>
+      <div class="price-tier">
+        <div class="price-tier-head">
+          <div class="pt-label">Package C</div>
+          <div class="pt-name">Premium Studio</div>
+        </div>
+        <div class="price-tier-body">
+          <div class="price-main">₪90,000</div>
+          <div class="price-unit">per week / 4 creatives</div>
+          <div class="price-usd">≈ $24,300 USD</div>
+          <ul class="price-breakdown">
+            <li>4 premium animated creatives</li>
+            <li>Senior creative direction</li>
+            <li>Full production pipeline management</li>
+            <li>Hebrew copywriting + cultural review</li>
+            <li>Legal compliance (external counsel)</li>
+            <li>3 revision rounds per creative</li>
+            <li>Channel strategy + placement recommendations</li>
+            <li>Weekly performance reporting</li>
+          </ul>
+          <div class="price-note">
+            Cost: ~₪43,000–98,000 · Margin: ~0–53%<br>
+            Minimum viable price: ₪60,000/week<br>
+            Recommended: ₪90,000/week<br>
+            Premium: ₪130,000/week
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Per-Creative Pricing Guide</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Creative Type</th><th>Internal Cost</th><th>Min Viable Price</th><th>Recommended Price</th><th>Premium Price</th></tr></thead>
+        <tbody>
+          <tr><td>Kinetic Typography (15 sec)</td><td>₪1,000–1,800</td><td>₪2,500</td><td>₪4,000</td><td>₪6,500</td></tr>
+          <tr><td>AI-Generated Sequence (20 sec)</td><td>₪1,500–2,500</td><td>₪3,500</td><td>₪6,000</td><td>₪9,000</td></tr>
+          <tr><td>2D Character Animation (30 sec)</td><td>₪3,500–6,500</td><td>₪8,000</td><td>₪14,000</td><td>₪22,000</td></tr>
+          <tr><td>Cinematic CGI / Product 3D (15–20 sec)</td><td>₪5,000–10,000</td><td>₪12,000</td><td>₪20,000</td><td>₪35,000</td></tr>
+          <tr><td>Comedy / Character Story (25–30 sec)</td><td>₪3,000–6,000</td><td>₪7,500</td><td>₪13,000</td><td>₪20,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:0.8rem; color:var(--text-3);">Note: Regulated product compliance premium (25–30%) is included in all prices above. Reference rate: 3.7 NIS/USD. Reusable asset costs (3D model, character rig, type system) are invoiced separately at a one-time rate and credited across future creatives.</p>
+  </div>
+</section>
+
+<!-- SECTION 7: WEEK 1 PRODUCTION BATCH -->
+<section>
+  <div class="wrap">
+    <h2>07 — Week 1 Production Batch</h2>
+    <p>Four complete production cards. Each includes the full Hebrew script with timed storyboard, ready to hand directly to an animator or editor. All 4 creatives target owned and organic channels. No paid platform advertising is recommended for khat.</p>
+
+    <div class="callout yellow">
+      <strong>Week 1 State — No Prior Performance Data</strong>
+      C-03 (Variation) defaults to a variation of C-01 in Week 1 since no prior creatives exist. From Week 3 onward, C-03 should be a variation of the actual top-performing asset from prior weeks.
+    </div>
+
+    <!-- CREATIVE #1 -->
+    <div class="prod-card">
+      <div class="prod-card-header">
+        <div class="prod-title-wrap">
+          <div class="prod-num">Creative #1 — Safe Winner</div>
+          <div class="prod-name">האסיף</div>
+          <div class="prod-english">The Harvest — Cinematic Product Animation</div>
+          <div class="prod-type-row">
+            <span class="prod-type-tag">15 sec</span>
+            <span class="prod-type-tag">Vertical 9:16</span>
+            <span class="prod-type-tag">CGI / AI Sequence</span>
+            <span class="prod-type-tag">Hebrew VO</span>
+            <span class="risk risk-low">LOW RISK</span>
+          </div>
+        </div>
+      </div>
+      <div class="prod-body">
+
+        <div class="prod-section">
+          <div class="prod-section-label">Concept</div>
+          <p>A cinematic 15-second product film. The camera moves through a stylized animated environment — fields, morning light, dew on leaves — arriving at a perfect fresh khat branch. The story is the plant: its origin, its freshness, its craft. No person appears. No spoken claim. Only atmosphere and a minimal Hebrew identity line at the end.</p>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Product Communication</div>
+          <div class="table-wrap">
+            <table>
+              <tbody>
+                <tr><td style="width:40%;font-weight:600;">What the viewer understands</td><td>This is a premium botanical/plant product with a clear origin story. It is carefully grown and selected.</td></tr>
+                <tr><td style="font-weight:600;">What they do NOT understand (yet)</td><td>What the product does. What khat is exactly (for new audiences). Where to buy it.</td></tr>
+                <tr><td style="font-weight:600;">When is product revealed</td><td>Seconds 8–12: the khat branch is the hero of the final product shot.</td></tr>
+                <tr><td style="font-weight:600;">Literal or metaphorical</td><td>Literal — the product itself is shown in a premium context.</td></tr>
+                <tr><td style="font-weight:600;">Misleading impression risk</td><td>None. The product is shown as a plant. No claims are made.</td></tr>
+                <tr><td style="font-weight:600;">Landing page match</td><td>Must land on a product/brand page that explains what khat is, its cultural context, and purchasing information. No mismatch.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Full Hebrew Script — Timed Storyboard</div>
+          <div class="table-wrap">
+            <table class="timeline">
+              <thead>
+                <tr><th>Time</th><th>Visual</th><th>Voice / Text</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>0–2s</td>
+                  <td class="visual-line">Extreme macro close-up. A single khat leaf tip. Morning dew drop in slow motion. Camera holds. Ambient sound: wind, silence. Almost black with one leaf in light.</td>
+                  <td><span class="heb-line">—</span><span class="eng-line">(Silence. No voice. Ambient nature sound.)</span></td>
+                </tr>
+                <tr>
+                  <td>2–5s</td>
+                  <td class="visual-line">Camera slowly pulls back. A full khat branch, perfectly lit in warm early-morning light. CGI / Midjourney + Runway composite. Rich texture. The branch is the hero.</td>
+                  <td><span class="heb-line">—</span><span class="eng-line">(Music enters — minimal, single instrument, Israeli/Middle-Eastern texture)</span></td>
+                </tr>
+                <tr>
+                  <td>5–9s</td>
+                  <td class="visual-line">Camera moves slowly through a stylized environment: golden field, close to the ground, moving through leaves. Cinematic depth of field. Warm palette.</td>
+                  <td><span class="heb-line">יש צמחים שהזמן שלהם הוא עכשיו.</span><span class="eng-line">VO: "There are plants whose time is now."</span></td>
+                </tr>
+                <tr>
+                  <td>9–12s</td>
+                  <td class="visual-line">Final product shot. A perfect fresh khat branch on a clean surface or held by unseen hands. Dramatic light. The product — beautiful, simple.</td>
+                  <td>
+                    <span class="heb-line">גת. טרי. ישראלי.</span>
+                    <span class="eng-line">VO: "Khat. Fresh. Israeli."</span>
+                    <span class="heb-line" style="font-size:0.8rem; font-weight:400; margin-top:0.4rem;">טקסט על מסך: "גת טרי"</span>
+                    <span class="eng-line">On-screen text: "Fresh Khat"</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>12–15s</td>
+                  <td class="visual-line">Brand logo / name appears. Clean background. The product remains visible but recedes slightly. Confident hold on brand identity.</td>
+                  <td>
+                    <span class="heb-line">כי יש דברים שאי אפשר להמציא מחדש.</span>
+                    <span class="eng-line">VO: "Because some things cannot be reinvented."</span>
+                    <span class="heb-line" style="font-size:0.8rem; font-weight:400; margin-top:0.4rem;">טקסט: [שם המותג] · "להזמנה ←"</span>
+                    <span class="eng-line">On-screen: [Brand Name] · "Order ←"</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Production</div>
+          <div class="two-col">
+            <div>
+              <h4>Recommended Tools</h4>
+              <p style="font-size:0.82rem;">Image frames: Flux 1.1 Pro (macro leaf textures, field environments) · Video motion: Kling AI 1.6 (camera movement, depth of field animation) · Assembly: After Effects (timing, text, brand) · VO: ElevenLabs Hebrew male voice · Music: licensed Middle Eastern minimal track (Artlist or Epidemic Sound)</p>
+            </div>
+            <div>
+              <h4>Alternative (Lower Cost)</h4>
+              <p style="font-size:0.82rem;">Stable Diffusion (Flux local via ComfyUI, ₪0 per image) · Pika for motion (~₪30/month) · Google TTS Hebrew · Royalty-free music from Pixabay</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Cost &amp; Pricing</div>
+          <div class="cost-grid">
+            <div class="cost-cell"><div class="cc-label">AI Tools</div><div class="cc-val">₪150–300</div><div class="cc-usd">≈ $40–81</div></div>
+            <div class="cost-cell"><div class="cc-label">Human Labor</div><div class="cc-val">₪600–1,000</div><div class="cc-usd">4–7 hrs</div></div>
+            <div class="cost-cell"><div class="cc-label">VO + Music</div><div class="cc-val">₪150–300</div><div class="cc-usd">licensed</div></div>
+            <div class="cost-cell"><div class="cc-label">Revision + Waste</div><div class="cc-val">₪230–400</div><div class="cc-usd">25% overhead</div></div>
+            <div class="cost-cell"><div class="cc-label">Total Cost</div><div class="cc-val">₪1,130–2,000</div><div class="cc-usd">≈ $305–540</div></div>
+            <div class="cost-cell cost-highlight"><div class="cc-label">Client Price</div><div class="cc-val">₪4,000–6,000</div><div class="cc-usd">≈ $1,080–1,620</div></div>
+          </div>
+          <p style="font-size:0.78rem; color:var(--text-3);">Production time: 8–12 hours total · Reusable assets created: khat 3D/rendered product shot (applicable to future creatives)</p>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Why This Works</div>
+          <p><strong>Psychological mechanism:</strong> Aesthetic pull. The viewer is drawn into a beautiful visual world before they process what they're watching. By the time the product appears, it carries the emotional quality of everything they just saw. No claim is needed because the feeling has been created.</p>
+          <p><strong>Expected objective:</strong> Brand awareness. New audience exposure to the product as a premium, beautiful botanical. High completion rate due to visual intrigue and short runtime.</p>
+          <p><strong>Next variation (Week 3):</strong> Same structure, different natural environment. Or: close-up of hands selecting leaves — the human craft behind the product.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CREATIVE #2 -->
+    <div class="prod-card">
+      <div class="prod-card-header">
+        <div class="prod-title-wrap">
+          <div class="prod-num">Creative #2 — Story</div>
+          <div class="prod-name">הטקס</div>
+          <div class="prod-english">The Ceremony — 2D Animated Family Story</div>
+          <div class="prod-type-row">
+            <span class="prod-type-tag">30 sec</span>
+            <span class="prod-type-tag">Vertical 9:16</span>
+            <span class="prod-type-tag">2D Character Animation</span>
+            <span class="prod-type-tag">Hebrew VO</span>
+            <span class="risk risk-low">LOW RISK</span>
+          </div>
+        </div>
+      </div>
+      <div class="prod-body">
+
+        <div class="prod-section">
+          <div class="prod-section-label">Concept</div>
+          <p>A 2D animated short story. A grandchild narrates in first person (Hebrew, conversational voice-over) about their grandfather's Friday afternoon ritual with khat. The story is about tradition, memory, and belonging — not about the product's effects. The product appears as part of the cultural scene. Warm, hand-drawn aesthetic with textured backgrounds.</p>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Product Communication</div>
+          <div class="table-wrap">
+            <table>
+              <tbody>
+                <tr><td style="width:40%;font-weight:600;">What the viewer understands</td><td>Khat is part of a multigenerational Israeli family tradition. It is associated with Friday afternoons, community, and warmth.</td></tr>
+                <tr><td style="font-weight:600;">What they do NOT understand</td><td>Any physiological effect. What specifically happens when khat is consumed.</td></tr>
+                <tr><td style="font-weight:600;">When is product revealed</td><td>Seconds 5–8: grandfather is shown preparing khat leaves at a table.</td></tr>
+                <tr><td style="font-weight:600;">Literal or metaphorical</td><td>Literal — khat is shown in a cultural context, handled in traditional manner.</td></tr>
+                <tr><td style="font-weight:600;">Misleading impression risk</td><td>Low. The story is about cultural tradition. The product is never depicted as producing a specific effect.</td></tr>
+                <tr><td style="font-weight:600;">Landing page match</td><td>Should land on a brand heritage page or "our story" section. Cultural framing must match what was communicated.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Full Hebrew Script — Timed Storyboard</div>
+          <div class="table-wrap">
+            <table class="timeline">
+              <thead>
+                <tr><th>Time</th><th>Visual</th><th>Voice / Text</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>0–3s</td>
+                  <td class="visual-line">2D animated interior: warm Israeli living room, late afternoon light, family gathering beginning to form. Children arriving, adults in conversation. Nostalgic, warm palette — ochres and terracottas.</td>
+                  <td>
+                    <span class="heb-line">כשסבא שלי הגיע לארץ, הוא הביא איתו משהו אחד.</span>
+                    <span class="eng-line">VO: "When my grandfather came to this country, he brought one thing with him."</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3–8s</td>
+                  <td class="visual-line">Cut to grandfather at a small wooden table. Animated hands carefully preparing khat leaves. Close-up on the ritual. Deliberate, practiced motion. A glass of water beside him. The room quiets around him.</td>
+                  <td>
+                    <span class="heb-line">לא רק את הטעם — את הטקס.</span>
+                    <span class="eng-line">VO: "Not just the taste — the ceremony."</span>
+                    <span class="heb-line" style="font-weight:400; font-size:0.82rem; margin-top:0.35rem;">טקסט: "הטקס" — מופיע בהדרגה, עיצוב כתב יד</span>
+                    <span class="eng-line">On-screen: The word "הטקס" (The Ceremony) fades in slowly, handwritten style</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>8–14s</td>
+                  <td class="visual-line">Wide shot: family gathering around grandfather. Children watching, adults joining. The room is full of warmth and quiet sound. No one is in a rush. The animated style is slightly stylized, not photorealistic.</td>
+                  <td>
+                    <span class="heb-line">כל שישי אחר הצהריים, הכל עצר.</span>
+                    <span class="eng-line">VO: "Every Friday afternoon, everything stopped."</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>14–22s</td>
+                  <td class="visual-line">Series of intimate close-ups: grandfather's hands, a child watching closely, a cup being passed, smiles. The product is part of the scene but never the visual subject — the people are. Music swells quietly.</td>
+                  <td>
+                    <span class="heb-line">הגת לא היה רק טעם. הוא היה הדרך שלנו להגיד: אנחנו כאן. אנחנו ביחד.</span>
+                    <span class="eng-line">VO: "The khat wasn't just a taste. It was our way of saying: we are here. We are together."</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>22–27s</td>
+                  <td class="visual-line">Pull back to show the full warm family scene. The grandfather smiles at the child. The room is perfect — animated, glowing, memory-like. A still moment.</td>
+                  <td>
+                    <span class="heb-line">גת [שם המותג] — המסורת שמחכה לך.</span>
+                    <span class="eng-line">VO: "Khat [Brand] — the tradition waiting for you."</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>27–30s</td>
+                  <td class="visual-line">Brand logo on warm background. Product shown in the corner — simple, not dominant. Website address appears.</td>
+                  <td>
+                    <span class="heb-line">טקסט: [שם המותג] · [אתר]</span>
+                    <span class="eng-line">On-screen: [Brand name] · [website]</span>
+                    <span class="eng-line">(Music resolves quietly)</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Production</div>
+          <div class="two-col">
+            <div>
+              <h4>Recommended Tools</h4>
+              <p style="font-size:0.82rem;">Character design: Midjourney (style reference sheets) → Adobe Animate or Spine 2D (rigging) · Background environments: Flux 1.1 Pro (painterly/textured) · VO: ElevenLabs Hebrew female voice (warm, conversational tone) · Music: acoustic Middle-Eastern string, licensed · Assembly: After Effects</p>
+            </div>
+            <div>
+              <h4>One-Time Asset Value</h4>
+              <p style="font-size:0.82rem;">Grandfather character rig created here is reusable across all future "family tradition" creatives — estimated value over 10 uses: ₪15,000–30,000 in avoided future production costs. Invoice separately as a one-time ₪3,000–5,000 asset fee.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Cost &amp; Pricing</div>
+          <div class="cost-grid">
+            <div class="cost-cell"><div class="cc-label">AI Tools</div><div class="cc-val">₪200–350</div><div class="cc-usd">≈ $54–95</div></div>
+            <div class="cost-cell"><div class="cc-label">Human Labor</div><div class="cc-val">₪1,800–3,000</div><div class="cc-usd">12–20 hrs</div></div>
+            <div class="cost-cell"><div class="cc-label">VO + Music</div><div class="cc-val">₪300–500</div><div class="cc-usd">licensed</div></div>
+            <div class="cost-cell"><div class="cc-label">Character Rig (1x)</div><div class="cc-val">₪3,000–5,000</div><div class="cc-usd">reusable asset</div></div>
+            <div class="cost-cell"><div class="cc-label">Total (incl. rig)</div><div class="cc-val">₪6,000–10,500</div><div class="cc-usd">≈ $1,620–2,838</div></div>
+            <div class="cost-cell cost-highlight"><div class="cc-label">Client Price</div><div class="cc-val">₪14,000–20,000</div><div class="cc-usd">≈ $3,780–5,405</div></div>
+          </div>
+          <p style="font-size:0.78rem; color:var(--text-3);">Production time: 18–28 hours · Rig is invoiced as a separate one-time line item. Subsequent uses of the character cost significantly less.</p>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Why This Works</div>
+          <p><strong>Psychological mechanism:</strong> Nostalgia and cultural identity. The Ethiopian-Israeli and Yemenite-Israeli communities have a strong connection to khat as part of family and Shabbat culture. This creative validates that identity and speaks directly to a viewer who already has an emotional relationship with the product. It also educates non-community viewers about the cultural context, building curiosity and respect.</p>
+          <p><strong>Expected objective:</strong> Deep engagement, social sharing within community, brand loyalty, email/WhatsApp subscription conversions.</p>
+          <p><strong>Next variation:</strong> A second character — a younger Israeli who discovers khat through an Ethiopian friend or at a market. Cross-cultural bridge story.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CREATIVE #3 -->
+    <div class="prod-card">
+      <div class="prod-card-header">
+        <div class="prod-title-wrap">
+          <div class="prod-num">Creative #3 — Performance Variation</div>
+          <div class="prod-name">הטעם</div>
+          <div class="prod-english">The Taste — Kinetic Typography + Macro Sequence</div>
+          <div class="prod-type-row">
+            <span class="prod-type-tag">20 sec</span>
+            <span class="prod-type-tag">Vertical 9:16</span>
+            <span class="prod-type-tag">Kinetic Typography</span>
+            <span class="prod-type-tag">Macro AI Visuals</span>
+            <span class="risk risk-low">LOW RISK</span>
+          </div>
+        </div>
+      </div>
+      <div class="prod-body">
+
+        <div class="prod-section">
+          <div class="prod-section-label">Concept</div>
+          <p>A variation of C-01's "plant as hero" concept, but executed through kinetic typography and extreme macro AI-generated visuals. The hook is a provocative question. Hebrew text moves through the frame as the visuals answer it — without ever naming a benefit, only a feeling. Fastest and cheapest concept in this batch to produce.</p>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Full Hebrew Script — Timed Storyboard</div>
+          <div class="table-wrap">
+            <table class="timeline">
+              <thead>
+                <tr><th>Time</th><th>Visual</th><th>Voice / Text</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>0–2s</td>
+                  <td class="visual-line">Black frame. A single word slams in from the right. Heavy Hebrew type. Then silence for 0.5 seconds.</td>
+                  <td>
+                    <span class="heb-line" style="font-size:1.2rem; font-weight:800;">יש טעמים</span>
+                    <span class="eng-line">On-screen (kinetic): "There are tastes"</span>
+                    <span class="eng-line">(No voice yet)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2–4s</td>
+                  <td class="visual-line">The word explodes into thousands of particles, reforming as an extreme macro close-up of a khat leaf. Camera is so close you cannot immediately identify the subject. Beautiful texture.</td>
+                  <td>
+                    <span class="heb-line" style="font-size:1.2rem; font-weight:800;">שמילים לא מגיעים אליהם.</span>
+                    <span class="eng-line">On-screen (kinetic): "that words cannot reach."</span>
+                    <span class="eng-line">VO (quiet, direct): "שמילים לא מגיעים אליהם."</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>4–8s</td>
+                  <td class="visual-line">Slow macro pull-back across the khat leaf surface. Camera moves through the texture like a landscape. The leaf color deepens as the camera finds the right angle — emerald, deep green.</td>
+                  <td>
+                    <span class="heb-line">לא כי הם קסם —</span>
+                    <span class="eng-line">VO: "Not because they're magic —"</span>
+                    <span class="heb-line" style="font-weight:400; font-size:0.85rem; margin-top:0.35rem;">טקסט: "לא כי הם קסם"</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>8–13s</td>
+                  <td class="visual-line">Full branch reveal. The camera has pulled far enough back that we now recognize the plant clearly. A branch of fresh khat leaves, beautifully lit against a clean background. Product hero shot.</td>
+                  <td>
+                    <span class="heb-line">אלא כי הם אמיתיים.</span>
+                    <span class="eng-line">VO: "But because they're real."</span>
+                    <span class="heb-line" style="font-weight:400; font-size:0.85rem; margin-top:0.35rem;">טקסט: "אלא כי הם אמיתיים."</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>13–17s</td>
+                  <td class="visual-line">Clean black or brand-color background. Product name appears in large, confident Hebrew typography. Below it: the brand tagline.</td>
+                  <td>
+                    <span class="heb-line" style="font-size:1.1rem; font-weight:700;">גת. פשוט גת.</span>
+                    <span class="eng-line">On-screen: "גת. פשוט גת." (Khat. Simply khat.)</span>
+                    <span class="eng-line">VO (same, confident): "גת. פשוט גת."</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>17–20s</td>
+                  <td class="visual-line">Brand logo + website. Minimal. Clean. The typography is the brand identity.</td>
+                  <td>
+                    <span class="heb-line">טקסט: [שם המותג] · [אתר]</span>
+                    <span class="eng-line">On-screen: [Brand] · [website]</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Production</div>
+          <div class="two-col">
+            <div>
+              <h4>Recommended Tools</h4>
+              <p style="font-size:0.82rem;">Macro visuals: Flux 1.1 Pro with macro photography prompts · Motion: Kling AI (slow camera drift through macro) or Runway · Typography animation: After Effects (kinetic type system, particles) · VO: ElevenLabs Hebrew male (confident, minimal) · No music — ambient sound design only</p>
+            </div>
+            <div>
+              <h4>Reusable from this Creative</h4>
+              <p style="font-size:0.82rem;">Hebrew kinetic type system (font, weight, timing, motion presets) — once built in After Effects, reusable across all future kinetic type creatives at near-zero additional cost.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Cost &amp; Pricing</div>
+          <div class="cost-grid">
+            <div class="cost-cell"><div class="cc-label">AI Tools</div><div class="cc-val">₪80–150</div><div class="cc-usd">≈ $22–41</div></div>
+            <div class="cost-cell"><div class="cc-label">Human Labor</div><div class="cc-val">₪400–700</div><div class="cc-usd">3–5 hrs</div></div>
+            <div class="cost-cell"><div class="cc-label">VO + Sound</div><div class="cc-val">₪80–150</div><div class="cc-usd">minimal</div></div>
+            <div class="cost-cell"><div class="cc-label">Type System (1x)</div><div class="cc-val">₪600–1,000</div><div class="cc-usd">reusable</div></div>
+            <div class="cost-cell"><div class="cc-label">Total Cost</div><div class="cc-val">₪1,160–2,000</div><div class="cc-usd">≈ $313–540</div></div>
+            <div class="cost-cell cost-highlight"><div class="cc-label">Client Price</div><div class="cc-val">₪3,500–5,000</div><div class="cc-usd">≈ $946–1,351</div></div>
+          </div>
+          <p style="font-size:0.78rem; color:var(--text-3);">Production time: 5–8 hours · Fastest creative in this batch. Type system is a one-time cost credited to client.</p>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Why This Works</div>
+          <p><strong>Psychological mechanism:</strong> Pattern interrupt + curiosity. The extreme macro makes the viewer question what they're seeing. The text creates a narrative arc — a question, then an answer. By the time the product appears, it feels like the reveal of something they were looking for. The ending ("simply khat") is confident and doesn't over-explain.</p>
+          <p><strong>Expected objective:</strong> High hook retention rate. Measures whether this audience responds to abstract/visual storytelling vs. the direct cultural narrative in C-02.</p>
+          <p><strong>Next variation:</strong> Same kinetic type system, different product proposition. "יש טעמים שחוזרים אליהם" (There are tastes you return to) — exploring memory and return-purchase psychology.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CREATIVE #4 -->
+    <div class="prod-card">
+      <div class="prod-card-header">
+        <div class="prod-title-wrap">
+          <div class="prod-num">Creative #4 — Experiment</div>
+          <div class="prod-name">ישראלי אמיתי</div>
+          <div class="prod-english">Real Israeli — Comedy Character Animation</div>
+          <div class="prod-type-row">
+            <span class="prod-type-tag">22 sec</span>
+            <span class="prod-type-tag">Vertical 9:16</span>
+            <span class="prod-type-tag">2D Comedy Animation</span>
+            <span class="prod-type-tag">Hebrew VO</span>
+            <span class="risk risk-med">MEDIUM RISK — requires legal review</span>
+          </div>
+        </div>
+      </div>
+      <div class="prod-body">
+
+        <div class="callout yellow">
+          <strong>Compliance Flag — MEDIUM Risk</strong>
+          This concept uses a "real Israeli" humorous character framing. The implicit message — that khat is part of a distinctly Israeli identity — is culturally resonant but could be read as implicitly associating the product with energy or sharpness. Require legal review before publishing. Specifically: ensure no line or visual can be interpreted as a performance or stimulant claim. Flag "ישראלי אמיתי" phrasing for legal check — does this imply superior cognitive/social function?
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Concept</div>
+          <p>A short, fast-paced 2D comedy sketch. An animated "typical Israeli" character — a bit loud, opinionated, lovable — is at a Friday gathering. They make a series of very Israeli observations about the gathering. The humor is entirely in the character's personality, not in any product claim. At the end, the character pulls out khat — the joke is that this is simply what you bring to a Friday. The humor is cultural, not product-benefit-based.</p>
+          <p><strong>Critical compliance note:</strong> The character's energy and humor must be established before khat appears. The khat must not be presented as the cause of any personality trait or social success shown in the video.</p>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Product Communication</div>
+          <div class="table-wrap">
+            <table>
+              <tbody>
+                <tr><td style="width:40%;font-weight:600;">What the viewer understands</td><td>Khat is what an Israeli character brings to Friday gatherings — it's normal, social, cultural.</td></tr>
+                <tr><td style="font-weight:600;">What they do NOT understand</td><td>What khat does physiologically. Any claimed benefit.</td></tr>
+                <tr><td style="font-weight:600;">When is product revealed</td><td>Second 16–18: the khat appears as a punchline item in the character's bag.</td></tr>
+                <tr><td style="font-weight:600;">Risk to watch</td><td>Character energy before the khat appearance must not create a "before/after" impression. The character is lively throughout — not a transformation.</td></tr>
+                <tr><td style="font-weight:600;">Misleading impression risk</td><td>MEDIUM — the cultural "every Israeli knows" framing could imply broader familiarity/normality than actually exists. Monitor and flag if claims emerge in audience response.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Full Hebrew Script — Timed Storyboard</div>
+          <div class="table-wrap">
+            <table class="timeline">
+              <thead>
+                <tr><th>Time</th><th>Visual</th><th>Voice / Text</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>0–3s</td>
+                  <td class="visual-line">2D animated character — 30s, energetic, expressive Israeli man or woman, arriving at a Friday gathering. Big bag in hand. Looks around the room, immediately takes stock of everything.</td>
+                  <td>
+                    <span class="heb-line">ישראלי אמיתי לא מגיע ריק לשישי.</span>
+                    <span class="eng-line">Character VO (fast, Israeli pace): "A real Israeli doesn't come to Friday empty-handed."</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3–7s</td>
+                  <td class="visual-line">Character pulls things out of the bag: hummus (check), pita (check), some salads (check). Animated reactions from family members — approval. Character nods with confidence.</td>
+                  <td>
+                    <span class="heb-line">חומוס? ברור. פיתה? כמובן. סלטים? בטח.</span>
+                    <span class="eng-line">Character: "Hummus? Obviously. Pita? Of course. Salads? Naturally."</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>7–12s</td>
+                  <td class="visual-line">Character looks at the gathering, notices something is missing. Tilts head. Reaches into the bag again with a knowing look. Family members lean in with curiosity. Comedic suspense built through animation timing.</td>
+                  <td>
+                    <span class="heb-line">ואז הוא הגיע לדבר האחד שאף אחד אחר לא הביא.</span>
+                    <span class="eng-line">VO (narrator, deadpan): "And then came the one thing nobody else brought."</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>12–16s</td>
+                  <td class="visual-line">Slow-motion comedic reveal: the character pulls out a beautiful package of fresh khat. Dramatic shaft of light (comedy). Family reactions: recognition, delight, approval. One grandparent nods slowly. "Ah."</td>
+                  <td>
+                    <span class="heb-line">גת. טרי. כמו שצריך.</span>
+                    <span class="eng-line">Character (with a smile): "Khat. Fresh. As it should be."</span>
+                    <span class="heb-line" style="font-weight:400; font-size:0.82rem; margin-top:0.35rem;">טקסט: "גת טרי — כמו שצריך"</span>
+                    <span class="eng-line">On-screen: "Fresh Khat — As It Should Be"</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>16–19s</td>
+                  <td class="visual-line">Freeze frame on the family's happy reaction. Character winks at the camera. Brand elements appear.</td>
+                  <td>
+                    <span class="heb-line">כי יש דברים שישראלי אמיתי לא שוכח.</span>
+                    <span class="eng-line">VO (narrator): "Because there are things a real Israeli doesn't forget."</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>19–22s</td>
+                  <td class="visual-line">Brand logo. Website address. Warm, comedy-appropriate tone maintained through visual style — not a hard sell ending.</td>
+                  <td>
+                    <span class="heb-line">טקסט: [שם המותג] · "להזמינות ←"</span>
+                    <span class="eng-line">On-screen: [Brand] · "Order ←"</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Production</div>
+          <div class="two-col">
+            <div>
+              <h4>Recommended Tools</h4>
+              <p style="font-size:0.82rem;">Character design: Midjourney (style reference) → Spine 2D (rig with facial expressions) · Background: Flux 1.1 Pro (interior scene) · VO: ElevenLabs Hebrew (character voice — expressive, fast paced; narrator — deadpan) · Comedy timing: After Effects with frame-by-frame sound sync · Music: upbeat Israeli folk-pop, licensed</p>
+            </div>
+            <div>
+              <h4>Reusable Assets</h4>
+              <p style="font-size:0.82rem;">The character rig created here can be reused for a "real Israeli" series — a recurring character in multiple future concepts. Consider this the pilot episode of a mini-series. If C-04 performs well, this character becomes the brand mascot.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Cost &amp; Pricing</div>
+          <div class="cost-grid">
+            <div class="cost-cell"><div class="cc-label">AI Tools</div><div class="cc-val">₪180–300</div><div class="cc-usd">≈ $49–81</div></div>
+            <div class="cost-cell"><div class="cc-label">Human Labor</div><div class="cc-val">₪1,500–2,500</div><div class="cc-usd">10–17 hrs</div></div>
+            <div class="cost-cell"><div class="cc-label">VO + Music</div><div class="cc-val">₪300–500</div><div class="cc-usd">2 voice styles</div></div>
+            <div class="cost-cell"><div class="cc-label">Character Rig (1x)</div><div class="cc-val">₪2,500–4,000</div><div class="cc-usd">reusable mascot</div></div>
+            <div class="cost-cell"><div class="cc-label">Legal Review</div><div class="cc-val">₪500–1,000</div><div class="cc-usd">required for MEDIUM</div></div>
+            <div class="cost-cell cost-highlight"><div class="cc-label">Client Price</div><div class="cc-val">₪13,000–18,000</div><div class="cc-usd">≈ $3,514–4,865</div></div>
+          </div>
+          <p style="font-size:0.78rem; color:var(--text-3);">Total production cost: ₪5,500–9,300. Production time: 15–22 hours. Legal review is required before publication. Character rig is invoiced separately.</p>
+        </div>
+
+        <div class="prod-section">
+          <div class="prod-section-label">Why This Works</div>
+          <p><strong>Psychological mechanism:</strong> In-group identity and social humor. The "real Israeli" framing activates cultural pride and humor simultaneously. The comedy timing creates share motivation — people forward content that makes them laugh and see themselves. The punchline is the product appearing as an obvious, beloved item rather than a surprise.</p>
+          <p><strong>Expected objective:</strong> Highest organic share potential of this batch. Tests whether humor and cultural identity outperform cinematic/atmospheric approaches with this audience. If this creative underperforms, the concept may need a different target segment (Ethiopian/Yemenite communities specifically vs. general Israeli).</p>
+          <p><strong>Next variation:</strong> If C-04 performs — launch a series. "ישראלי אמיתי" Episode 2: character at a work meeting, episode 3: character at the shuk. Same rig, new scenarios, each ending with the same punchline.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 8: CD PIPELINE LOGIC -->
+<section>
+  <div class="wrap">
+    <h2>08 — Creative Director Pipeline Logic</h2>
+    <p>At the start of every weekly production cycle, this checklist governs what gets created.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Step</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Review history</td><td>List all creatives produced in prior weeks. Note which territories have been used, which formats, which hooks.</td></tr>
+          <tr><td>2</td><td>Performance check</td><td>Identify the top-performing creative from the prior week (by engagement, click-through, completion rate, or conversion depending on channel). This becomes the C-03 variation basis.</td></tr>
+          <tr><td>3</td><td>Gap identification</td><td>What creative territory has not been tested? Which audience segment has not been directly addressed? Which format has not been tried?</td></tr>
+          <tr><td>4</td><td>Concept generation</td><td>Generate 6–8 raw concepts. Do not filter yet. Include ideas from all 8 animation styles.</td></tr>
+          <tr><td>5</td><td>Ranking</td><td>Score each concept: Expected performance × Compliance × Production cost × Strategic value. Select top 4.</td></tr>
+          <tr><td>6</td><td>Compliance check</td><td>Assign LOW/MEDIUM/HIGH to each. Reject HIGH. Flag MEDIUM for legal review.</td></tr>
+          <tr><td>7</td><td>Script writing</td><td>Write full Hebrew scripts for all 4 selected concepts. No concept without a complete script.</td></tr>
+          <tr><td>8</td><td>Production planning</td><td>Assign tools, estimate hours, identify reusable assets. Produce in parallel where possible.</td></tr>
+          <tr><td>9</td><td>Cost &amp; pricing</td><td>Calculate production cost per creative. Set client price with margin.</td></tr>
+          <tr><td>10</td><td>Publish &amp; measure</td><td>Distribute to owned/organic channels. Tag for tracking. Define what success looks like for each creative before publishing.</td></tr>
+          <tr><td>11</td><td>Report &amp; iterate</td><td>After 7 days: what worked? What will you do differently next week? Update this document with findings.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<section style="border-bottom:none; padding: 2rem 0 3rem;">
+  <div class="wrap">
+    <div class="doc-footer">
+      <strong>System Document: Regulated Creative System — Phase 02</strong><br>
+      Target Market: Israel &nbsp;·&nbsp; Product: גת (Khat, fresh leaves) &nbsp;·&nbsp; Language: Hebrew-First &nbsp;·&nbsp; Production Method: Animation + AI-Assisted<br>
+      Build on Phase 01: read Phase 01 intelligence report before this document. This document governs Week 1 production batch and all subsequent weekly cycles.<br><br>
+      <strong>Compliance reminder:</strong> This system operates within Israeli law and advertising standards. No health, therapeutic, or performance claims are made or implied in any recommended creative. Every MEDIUM-risk creative requires legal review before publication. Platform-level paid advertising for khat is not available on major platforms (Meta, Google, TikTok, YouTube) — all creatives target owned, organic, and local channels only.
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
