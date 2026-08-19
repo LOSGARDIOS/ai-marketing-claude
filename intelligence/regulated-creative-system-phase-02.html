@@ -622,81 +622,94 @@ tr:hover td { background: var(--bg-2); }
       </table>
     </div>
 
-    <h3>Tool Selection Philosophy</h3>
+    <h3>Primary Production Stack — Higgsfield + Magnific</h3>
     <div class="callout blue">
-      <strong>Rule</strong>
-      Before selecting a tool, ask: "What is the simplest and cheapest tool capable of producing the required quality?" Do not use an expensive model because it is more powerful. Use it because the simpler alternative genuinely cannot match the required output.
+      <strong>Stack Logic</strong>
+      Higgsfield generates the video. Magnific enhances key frames. CapCut (free) handles Hebrew text overlay and assembly. ElevenLabs handles the VO. Claude Code writes scripts and optimizes prompts. This four-tool stack covers 90% of all creatives at under ₪50 in AI costs per piece.
     </div>
 
-    <h3>Primary Tool Stack (Cost-Optimized)</h3>
     <div class="tool-row">
       <div class="tool-card recommended">
-        <div class="tool-badge rec">Recommended · Image Generation</div>
-        <div class="tool-name">Flux 1.1 Pro (via API)</div>
-        <div class="tool-cost">~$0.04/image · ≈ ₪0.15/image</div>
-        <div class="tool-note">High quality, fast, cheap. Best ratio for batch generation. Use for 80% of AI image needs.</div>
-      </div>
-      <div class="tool-card">
-        <div class="tool-badge alt">Alternative · Image Generation</div>
-        <div class="tool-name">Midjourney Pro</div>
-        <div class="tool-cost">$60/month · ≈ ₪222/month</div>
-        <div class="tool-note">Better for complex art direction, editorial look. Use only when Flux output is insufficient.</div>
-      </div>
-    </div>
-    <div class="tool-row">
-      <div class="tool-card recommended">
-        <div class="tool-badge rec">Recommended · Video Generation</div>
-        <div class="tool-name">Kling AI 1.6</div>
-        <div class="tool-cost">$8–30/month · ≈ ₪30–110/month</div>
-        <div class="tool-note">Best quality-per-cost for short clips (5–10 sec). Handles motion well. Strong for product and nature shots.</div>
+        <div class="tool-badge rec">Primary · Video Generation</div>
+        <div class="tool-name">Higgsfield AI</div>
+        <div class="tool-cost">~$0.50–2.00/clip · ≈ ₪2–8 per attempt</div>
+        <div class="tool-note">Social-optimized AI video generation. Text-to-video and image-to-video. Produces 5–30 sec clips. 2–4 generation attempts per creative. API available for workflow automation. Strong for lifestyle, nature, and product atmosphere scenes.</div>
       </div>
       <div class="tool-card">
         <div class="tool-badge alt">Alternative · Video Generation</div>
-        <div class="tool-name">Runway Gen-3 Alpha</div>
-        <div class="tool-cost">$35–95/month · ≈ ₪130–350/month</div>
-        <div class="tool-note">Use for complex camera movement, cinematic look, or when Kling motion is insufficient.</div>
+        <div class="tool-name">Kling AI / Pika Labs</div>
+        <div class="tool-cost">$8–30/month · ≈ ₪30–110/month</div>
+        <div class="tool-note">Use when Higgsfield doesn't match the specific visual need. Kling for motion quality and realism. Pika for stylized or animated looks. Not the default — only on Higgsfield shortfall.</div>
       </div>
     </div>
     <div class="tool-row">
       <div class="tool-card recommended">
-        <div class="tool-badge rec">Recommended · Hebrew Voiceover</div>
+        <div class="tool-badge rec">Primary · Image Enhancement</div>
+        <div class="tool-name">Magnific AI</div>
+        <div class="tool-cost">~$0.05–0.15/image · ≈ ₪0.20–0.55 per enhancement</div>
+        <div class="tool-note">Upscales and enhances AI-generated frames to social-ready quality. Used on hero frames, product close-ups, and thumbnail images extracted from Higgsfield output. Typical use: 3–5 images per creative. Pro plan ~$40/month covers high volume.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-badge alt">Alternative · Image Generation</div>
+        <div class="tool-name">Flux 1.1 Pro (API)</div>
+        <div class="tool-cost">~$0.04/image · ≈ ₪0.15/image</div>
+        <div class="tool-note">For static backgrounds and product stills that Higgsfield then animates. Use when you need a specific composition Higgsfield can't generate from text alone.</div>
+      </div>
+    </div>
+    <div class="tool-row">
+      <div class="tool-card recommended">
+        <div class="tool-badge rec">Primary · Hebrew Voiceover</div>
         <div class="tool-name">ElevenLabs (Hebrew voices)</div>
-        <div class="tool-cost">$22/month · ≈ ₪81/month</div>
-        <div class="tool-note">Best natural-sounding Hebrew TTS. Select "Alon" or "Noa" voices. Always review output with native speaker.</div>
+        <div class="tool-cost">$22/month ≈ ₪81/month · ~₪0.50–2 amortized per creative</div>
+        <div class="tool-note">"Alon" (male, confident) or "Noa" (female, warm). Monthly Creator plan covers high-volume output easily. Review every VO with a native Hebrew speaker before publishing — automated TTS misses stress and intonation.</div>
       </div>
       <div class="tool-card">
-        <div class="tool-badge alt">Alternative · Hebrew Voiceover</div>
+        <div class="tool-badge alt">Alternative · Hebrew VO (free)</div>
         <div class="tool-name">Google Cloud TTS (Hebrew)</div>
-        <div class="tool-cost">~$0.004/1K chars · effectively free at this volume</div>
-        <div class="tool-note">Less natural but acceptable for kinetic typography or where voice is secondary to music.</div>
+        <div class="tool-cost">~$0.004/1K chars · ≈ ₪0 at this volume</div>
+        <div class="tool-note">Acceptable when VO is secondary to music and text overlay. Less natural prosody. Use for kinetic typography concepts where the voice is background, not hero.</div>
       </div>
     </div>
     <div class="tool-row">
       <div class="tool-card recommended">
-        <div class="tool-badge rec">Recommended · Animation Assembly</div>
-        <div class="tool-name">Adobe After Effects</div>
-        <div class="tool-cost">Part of CC · ~₪220/month</div>
-        <div class="tool-note">Industry standard for motion graphics and compositing. Best for kinetic typography and complex sequences.</div>
+        <div class="tool-badge rec">Primary · Assembly + Hebrew Text</div>
+        <div class="tool-name">CapCut (free)</div>
+        <div class="tool-cost">Free · ₪0</div>
+        <div class="tool-note">Fastest tool for assembling Higgsfield clips, adding Hebrew RTL text overlays, syncing VO, and adding music. Mobile or desktop. Built-in Hebrew support. No learning curve. Produces social-ready vertical video in 20–30 minutes per creative.</div>
       </div>
       <div class="tool-card">
-        <div class="tool-badge alt">Alternative · Animation Assembly</div>
-        <div class="tool-name">DaVinci Resolve (Free)</div>
+        <div class="tool-badge alt">Alternative · Assembly</div>
+        <div class="tool-name">DaVinci Resolve (free)</div>
         <div class="tool-cost">Free · ₪0</div>
-        <div class="tool-note">Fully capable for cuts, color, and basic compositing. Fusion for motion graphics. Use when AE is not available.</div>
+        <div class="tool-note">More control over color grading and precise compositing. Use when CapCut is limiting — complex text timing, color correction, multi-track audio. Fusion node editor for motion graphics.</div>
       </div>
     </div>
 
-    <h3>Reusable Asset Strategy</h3>
-    <p>Certain assets, once created, reduce cost across all future creatives. Track these separately from per-creative costs.</p>
+    <h3>Monthly Tool Cost (Shared Across All Creatives)</h3>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Asset Type</th><th>One-Time Cost (₪)</th><th>Reusable For</th><th>Value</th></tr></thead>
+        <thead><tr><th>Tool</th><th>Monthly Cost</th><th>Per Creative (at 16/month)</th></tr></thead>
         <tbody>
-          <tr><td>3D khat product model (branch + leaves)</td><td>1,800–3,500</td><td>All future product shots and animations</td><td>Eliminates photography need; consistent brand look</td></tr>
-          <tr><td>Brand environment / scene (kitchen, gathering table)</td><td>2,000–4,000</td><td>All character story creatives</td><td>Set consistency; fast character placement</td></tr>
-          <tr><td>Hebrew kinetic typography system (font, motion, timing)</td><td>800–1,500</td><td>All kinetic typography concepts</td><td>Consistent brand voice in motion; reuse for 10–20 creatives</td></tr>
-          <tr><td>Character rig (animated persona)</td><td>3,000–6,000</td><td>All character-based creatives</td><td>Significant cost reduction from 3rd creative onward</td></tr>
-          <tr><td>Licensed background music pack</td><td>400–1,200</td><td>Multiple creatives</td><td>Consistent sonic identity; no per-use licensing fees</td></tr>
+          <tr><td>Higgsfield AI (API, pay-per-generation)</td><td>Variable: ~$6–30 at 16 creatives</td><td>₪8–28</td></tr>
+          <tr><td>Magnific AI (Pro plan)</td><td>~$40/month ≈ ₪148</td><td>₪9</td></tr>
+          <tr><td>ElevenLabs (Creator plan)</td><td>$22/month ≈ ₪81</td><td>₪5</td></tr>
+          <tr><td>CapCut Pro (optional — free tier sufficient for most)</td><td>$0–14/month ≈ ₪0–52</td><td>₪0–3</td></tr>
+          <tr><td>Music license (annual plan ÷ 12)</td><td>~₪50/month</td><td>₪3</td></tr>
+          <tr style="font-weight:600;"><td>Total monthly tooling</td><td>~₪330–480/month</td><td>₪22–31 per creative</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>One-Time Setup Assets (Invoice Separately — Week 1 Only)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Asset</th><th>Cost (₪)</th><th>Applies To</th></tr></thead>
+        <tbody>
+          <tr><td>Higgsfield brand prompt library (tested visual style seeds for khat product + scene types)</td><td>300–500</td><td>All future generations — consistent brand visual language</td></tr>
+          <tr><td>Hebrew caption template (CapCut preset: fonts, RTL layout, timing, brand colors)</td><td>150–250</td><td>All creatives with text overlay — zero rebuild cost each time</td></tr>
+          <tr><td>Audio identity pack (3–5 licensed tracks: warm, cinematic, comedic tones)</td><td>200–400</td><td>All creatives — no per-use licensing fees ever</td></tr>
+          <tr><td>ElevenLabs voice profile (custom pronunciation guide for brand name + product term)</td><td>150–300</td><td>Consistent Hebrew VO across all creatives</td></tr>
+          <tr style="font-weight:600;"><td>Total one-time setup</td><td>800–1,450</td><td>Invoice on Month 1. Not repeated. Amortizes in Week 1.</td></tr>
         </tbody>
       </table>
     </div>
@@ -792,119 +805,82 @@ tr:hover td { background: var(--bg-2); }
 <section>
   <div class="wrap">
     <h2>06 — תמחור שוק ישראלי (Israeli Market Pricing)</h2>
-    <p>All pricing is in Israeli New Shekel (₪). US Dollar equivalents are shown at a reference rate of ~3.7 NIS/USD. Regulated-product compliance overhead adds approximately 25–30% to standard creative agency rates.</p>
+    <p>All pricing is in Israeli New Shekel (₪). US Dollar equivalents shown at ~3.7 NIS/USD. The pricing model is <strong>per creative</strong>. Monthly fee = agreed per-creative rate × number of creatives ordered that month. No fixed packages — the client sets the volume.</p>
 
-    <h3>Internal Production Cost per Creative (AI-Assisted)</h3>
+    <div class="callout blue">
+      <strong>Pricing Model</strong>
+      Monthly fee = (per-creative rate) × (number of creatives). Volume determines the rate. The client picks a monthly cadence — 4, 8, 16, 24, or 32 creatives — and pays accordingly. Rates are fixed for 3-month periods, then reviewed based on volume actuals.
+    </div>
+
+    <h3>Internal Cost per Creative — Higgsfield + Magnific Stack</h3>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Cost Component</th><th>Lean</th><th>Professional</th><th>Premium</th></tr></thead>
+        <thead><tr><th>Component</th><th>Standard (15–20 sec)</th><th>Story / Complex (25–30 sec)</th></tr></thead>
         <tbody>
-          <tr><td>AI generation (image + video tools)</td><td>₪100–250</td><td>₪300–700</td><td>₪700–2,200</td></tr>
-          <tr><td>Human creative (concept, script, direction)</td><td>₪300–500</td><td>₪1,200–2,500</td><td>₪4,000–8,000</td></tr>
-          <tr><td>Assembly, editing, compositing</td><td>₪200–400</td><td>₪600–1,200</td><td>₪1,500–3,000</td></tr>
-          <tr><td>Voiceover + sound design</td><td>₪100–200</td><td>₪300–700</td><td>₪800–2,000</td></tr>
-          <tr><td>Compliance review</td><td>₪150–300</td><td>₪300–600</td><td>₪600–1,500</td></tr>
-          <tr><td>Revision allowance (1 round)</td><td>₪150–250</td><td>₪400–800</td><td>₪1,000–2,500</td></tr>
-          <tr><td>Waste factor (25–40% generation overhead)</td><td>₪250–425</td><td>₪776–1,501</td><td>₪2,151–5,300</td></tr>
-          <tr style="font-weight:600;"><td>Total production cost per creative</td><td>₪1,250–2,325</td><td>₪3,876–8,001</td><td>₪10,751–24,500</td></tr>
+          <tr><td>Higgsfield generation (2–4 attempts × ~$0.80)</td><td>₪6–24</td><td>₪12–36</td></tr>
+          <tr><td>Magnific enhancement (3–5 frames × ~₪0.40)</td><td>₪1–4</td><td>₪2–6</td></tr>
+          <tr><td>ElevenLabs Hebrew VO (amortized)</td><td>₪2–5</td><td>₪3–8</td></tr>
+          <tr><td>Music (amortized from licensed pack)</td><td>₪4–12</td><td>₪4–12</td></tr>
+          <tr><td>Human: prompt engineering + generation oversight (45 min)</td><td>₪67</td><td>₪90–112</td></tr>
+          <tr><td>Human: Hebrew text overlay + CapCut assembly (25 min)</td><td>₪37</td><td>₪52</td></tr>
+          <tr><td>Human: compliance spot-check + QC (15 min)</td><td>₪22</td><td>₪30</td></tr>
+          <tr><td>Retry / waste overhead (30%)</td><td>₪42–52</td><td>₪56–79</td></tr>
+          <tr style="font-weight:600;"><td>Total internal cost per creative</td><td>₪181–223</td><td>₪249–355</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:0.8rem; color:var(--text-3);">Human rate: ₪90/hr. Compliance check included in QC. Setup assets not included — invoice as one-time fee (₪800–1,450) in Month 1.</p>
+
+    <h3>Client Pricing — Volume Tiers</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Monthly Volume</th><th>Rate / Creative</th><th>Monthly Fee</th><th>Internal Cost (est.)</th><th>Gross Margin</th><th>USD Equiv.</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>4 creatives/month</td><td>₪1,100</td><td>₪4,400</td><td>₪724–892</td><td>~80%</td><td>≈ $1,189</td></tr>
+          <tr><td>8 creatives/month</td><td>₪1,000</td><td>₪8,000</td><td>₪1,448–1,784</td><td>~78%</td><td>≈ $2,162</td></tr>
+          <tr style="background:var(--blue-bg);font-weight:600;"><td>16/month (4/week) ← Recommended</td><td>₪900</td><td>₪14,400</td><td>₪2,896–3,568</td><td>~75–80%</td><td>≈ $3,892</td></tr>
+          <tr><td>24 creatives/month</td><td>₪820</td><td>₪19,680</td><td>₪4,344–5,352</td><td>~73–78%</td><td>≈ $5,319</td></tr>
+          <tr><td>32 creatives/month (8/week)</td><td>₪750</td><td>₪24,000</td><td>₪5,792–7,136</td><td>~70–76%</td><td>≈ $6,486</td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3>Client Pricing (Weekly — 4 Creatives)</h3>
-    <div class="price-grid">
-      <div class="price-tier">
-        <div class="price-tier-head">
-          <div class="pt-label">Package A</div>
-          <div class="pt-name">Lean Digital</div>
-        </div>
-        <div class="price-tier-body">
-          <div class="price-main">₪12,000</div>
-          <div class="price-unit">per week / 4 creatives</div>
-          <div class="price-usd">≈ $3,240 USD</div>
-          <ul class="price-breakdown">
-            <li>4 AI-assisted animated creatives</li>
-            <li>Hebrew scripts and copy included</li>
-            <li>1 revision round per creative</li>
-            <li>Basic compliance review</li>
-            <li>Owned channel formats only</li>
-          </ul>
-          <div class="price-note">
-            Cost: ~₪5,000–9,300 · Margin: ~35–58%<br>
-            Minimum viable price: ₪8,000/week<br>
-            Recommended: ₪12,000/week<br>
-            Premium: ₪16,000/week
-          </div>
-        </div>
-      </div>
-      <div class="price-tier featured">
-        <div class="price-tier-head">
-          <div class="pt-label">Package B · Recommended</div>
-          <div class="pt-name">Professional Studio</div>
-        </div>
-        <div class="price-tier-body">
-          <div class="price-main">₪32,000</div>
-          <div class="price-unit">per week / 4 creatives</div>
-          <div class="price-usd">≈ $8,650 USD</div>
-          <ul class="price-breakdown">
-            <li>4 professionally animated creatives</li>
-            <li>Full Hebrew script + storyboard</li>
-            <li>2 revision rounds per creative</li>
-            <li>Legal compliance review</li>
-            <li>Multi-format delivery (vertical, square)</li>
-            <li>Monthly performance analysis</li>
-          </ul>
-          <div class="price-note">
-            Cost: ~₪15,500–32,000 · Margin: ~0–50%<br>
-            Minimum viable price: ₪22,000/week<br>
-            Recommended: ₪32,000/week<br>
-            Premium: ₪45,000/week
-          </div>
-        </div>
-      </div>
-      <div class="price-tier">
-        <div class="price-tier-head">
-          <div class="pt-label">Package C</div>
-          <div class="pt-name">Premium Studio</div>
-        </div>
-        <div class="price-tier-body">
-          <div class="price-main">₪90,000</div>
-          <div class="price-unit">per week / 4 creatives</div>
-          <div class="price-usd">≈ $24,300 USD</div>
-          <ul class="price-breakdown">
-            <li>4 premium animated creatives</li>
-            <li>Senior creative direction</li>
-            <li>Full production pipeline management</li>
-            <li>Hebrew copywriting + cultural review</li>
-            <li>Legal compliance (external counsel)</li>
-            <li>3 revision rounds per creative</li>
-            <li>Channel strategy + placement recommendations</li>
-            <li>Weekly performance reporting</li>
-          </ul>
-          <div class="price-note">
-            Cost: ~₪43,000–98,000 · Margin: ~0–53%<br>
-            Minimum viable price: ₪60,000/week<br>
-            Recommended: ₪90,000/week<br>
-            Premium: ₪130,000/week
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <h3>Per-Creative Pricing Guide</h3>
+    <h3>Price Anchors by Creative Type (at Standard Rate ₪900)</h3>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Creative Type</th><th>Internal Cost</th><th>Min Viable Price</th><th>Recommended Price</th><th>Premium Price</th></tr></thead>
+        <thead><tr><th>Creative Type</th><th>Internal Cost</th><th>Client Price</th><th>Notes</th></tr></thead>
         <tbody>
-          <tr><td>Kinetic Typography (15 sec)</td><td>₪1,000–1,800</td><td>₪2,500</td><td>₪4,000</td><td>₪6,500</td></tr>
-          <tr><td>AI-Generated Sequence (20 sec)</td><td>₪1,500–2,500</td><td>₪3,500</td><td>₪6,000</td><td>₪9,000</td></tr>
-          <tr><td>2D Character Animation (30 sec)</td><td>₪3,500–6,500</td><td>₪8,000</td><td>₪14,000</td><td>₪22,000</td></tr>
-          <tr><td>Cinematic CGI / Product 3D (15–20 sec)</td><td>₪5,000–10,000</td><td>₪12,000</td><td>₪20,000</td><td>₪35,000</td></tr>
-          <tr><td>Comedy / Character Story (25–30 sec)</td><td>₪3,000–6,000</td><td>₪7,500</td><td>₪13,000</td><td>₪20,000</td></tr>
+          <tr><td>Kinetic Typography (15 sec, CapCut text animation)</td><td>₪181–210</td><td>₪850</td><td>Fastest. Template reusable from 1st creative onward.</td></tr>
+          <tr><td>Cinematic Sequence (15–20 sec, Higgsfield + Magnific)</td><td>₪200–250</td><td>₪900</td><td>Core format. Most use cases.</td></tr>
+          <tr><td>Story / Narrative (25–30 sec, multiple Higgsfield scenes)</td><td>₪280–360</td><td>₪1,050</td><td>Slightly more attempts needed. +₪150 over standard rate.</td></tr>
+          <tr><td>Comedy / Character (25 sec, MEDIUM risk)</td><td>₪260–340 + ₪300–500 legal</td><td>₪1,100 + legal</td><td>Legal review billed separately or via compliance retainer.</td></tr>
         </tbody>
       </table>
     </div>
-    <p style="font-size:0.8rem; color:var(--text-3);">Note: Regulated product compliance premium (25–30%) is included in all prices above. Reference rate: 3.7 NIS/USD. Reusable asset costs (3D model, character rig, type system) are invoiced separately at a one-time rate and credited across future creatives.</p>
+
+    <h3>Engagement Terms</h3>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td style="width:36%;font-weight:600;">Minimum commitment</td><td>4 creatives/month. No weekly minimum — order the monthly total, deliver across the month.</td></tr>
+          <tr><td style="font-weight:600;">One-time setup fee</td><td>₪800–1,450. Covers: Higgsfield brand prompt library, Hebrew caption template, audio pack, ElevenLabs voice guide. Invoiced Month 1. Not repeated.</td></tr>
+          <tr><td style="font-weight:600;">Revisions included</td><td>1 round per creative. Additional rounds: ₪120/creative.</td></tr>
+          <tr><td style="font-weight:600;">Delivery SLA</td><td>4 creatives within 5 business days of brief confirmation per batch.</td></tr>
+          <tr><td style="font-weight:600;">MEDIUM-risk creatives</td><td>Require external legal review before publishing. Cost: ₪300–500 per review. Billed separately OR via compliance retainer.</td></tr>
+          <tr><td style="font-weight:600;">Compliance retainer (optional)</td><td>₪1,000/month. Covers up to 4 MEDIUM-risk legal reviews + monthly policy-landscape monitoring update.</td></tr>
+          <tr><td style="font-weight:600;">Rate lock</td><td>Per-creative rate is fixed for the first 3 months, then reviewed against actual delivery volume.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Sample Monthly Fee Calculation</h3>
+    <div class="callout green">
+      <strong>Example — 16 creatives/month at ₪900 each</strong>
+      16 × ₪900 = ₪14,400/month + ₪800–1,450 setup (Month 1 only) + optional ₪1,000 compliance retainer<br>
+      Month 1 total: ₪16,200–16,850 · Month 2+ total: ₪14,400–15,400 · Internal cost: ~₪2,900–3,600 · Gross margin: ~75–80%
+    </div>
   </div>
 </section>
 
@@ -1010,12 +986,12 @@ tr:hover td { background: var(--bg-2); }
           <div class="prod-section-label">Production</div>
           <div class="two-col">
             <div>
-              <h4>Recommended Tools</h4>
-              <p style="font-size:0.82rem;">Image frames: Flux 1.1 Pro (macro leaf textures, field environments) · Video motion: Kling AI 1.6 (camera movement, depth of field animation) · Assembly: After Effects (timing, text, brand) · VO: ElevenLabs Hebrew male voice · Music: licensed Middle Eastern minimal track (Artlist or Epidemic Sound)</p>
+              <h4>Primary Stack</h4>
+              <p style="font-size:0.82rem;">Video: Higgsfield AI (prompt: "cinematic macro shot of fresh green khat leaves, golden morning light, slow camera drift, shallow depth of field, botanical film") · Enhancement: Magnific AI on 4 key frames · Assembly: CapCut (Hebrew text overlay, brand logo, CTA) · VO: ElevenLabs "Alon" (male, calm, confident) · Music: Middle Eastern minimal acoustic from licensed pack</p>
             </div>
             <div>
-              <h4>Alternative (Lower Cost)</h4>
-              <p style="font-size:0.82rem;">Stable Diffusion (Flux local via ComfyUI, ₪0 per image) · Pika for motion (~₪30/month) · Google TTS Hebrew · Royalty-free music from Pixabay</p>
+              <h4>If Higgsfield Output Is Insufficient</h4>
+              <p style="font-size:0.82rem;">Flux 1.1 Pro for static product frame (₪0.15) → animate with Kling AI (slow zoom). CapCut for final assembly. No change to VO or music workflow.</p>
             </div>
           </div>
         </div>
@@ -1023,14 +999,14 @@ tr:hover td { background: var(--bg-2); }
         <div class="prod-section">
           <div class="prod-section-label">Cost &amp; Pricing</div>
           <div class="cost-grid">
-            <div class="cost-cell"><div class="cc-label">AI Tools</div><div class="cc-val">₪150–300</div><div class="cc-usd">≈ $40–81</div></div>
-            <div class="cost-cell"><div class="cc-label">Human Labor</div><div class="cc-val">₪600–1,000</div><div class="cc-usd">4–7 hrs</div></div>
-            <div class="cost-cell"><div class="cc-label">VO + Music</div><div class="cc-val">₪150–300</div><div class="cc-usd">licensed</div></div>
-            <div class="cost-cell"><div class="cc-label">Revision + Waste</div><div class="cc-val">₪230–400</div><div class="cc-usd">25% overhead</div></div>
-            <div class="cost-cell"><div class="cc-label">Total Cost</div><div class="cc-val">₪1,130–2,000</div><div class="cc-usd">≈ $305–540</div></div>
-            <div class="cost-cell cost-highlight"><div class="cc-label">Client Price</div><div class="cc-val">₪4,000–6,000</div><div class="cc-usd">≈ $1,080–1,620</div></div>
+            <div class="cost-cell"><div class="cc-label">Higgsfield Gen</div><div class="cc-val">₪10–25</div><div class="cc-usd">3 attempts</div></div>
+            <div class="cost-cell"><div class="cc-label">Magnific Enhance</div><div class="cc-val">₪2–5</div><div class="cc-usd">4 frames</div></div>
+            <div class="cost-cell"><div class="cc-label">VO + Music</div><div class="cc-val">₪8–18</div><div class="cc-usd">ElevenLabs + pack</div></div>
+            <div class="cost-cell"><div class="cc-label">Human Labor</div><div class="cc-val">₪126–180</div><div class="cc-usd">1.4–2 hrs</div></div>
+            <div class="cost-cell"><div class="cc-label">Total Internal</div><div class="cc-val">₪195–260</div><div class="cc-usd">≈ $53–70</div></div>
+            <div class="cost-cell cost-highlight"><div class="cc-label">Client Price</div><div class="cc-val">₪900–1,000</div><div class="cc-usd">≈ $243–270</div></div>
           </div>
-          <p style="font-size:0.78rem; color:var(--text-3);">Production time: 8–12 hours total · Reusable assets created: khat 3D/rendered product shot (applicable to future creatives)</p>
+          <p style="font-size:0.78rem; color:var(--text-3);">Production time: 1.5–2 hours · Higgsfield style seed (khat product in golden-hour atmosphere) reusable for all future product shots at ₪0 incremental cost</p>
         </div>
 
         <div class="prod-section">
@@ -1149,12 +1125,12 @@ tr:hover td { background: var(--bg-2); }
           <div class="prod-section-label">Production</div>
           <div class="two-col">
             <div>
-              <h4>Recommended Tools</h4>
-              <p style="font-size:0.82rem;">Character design: Midjourney (style reference sheets) → Adobe Animate or Spine 2D (rigging) · Background environments: Flux 1.1 Pro (painterly/textured) · VO: ElevenLabs Hebrew female voice (warm, conversational tone) · Music: acoustic Middle-Eastern string, licensed · Assembly: After Effects</p>
+              <h4>Primary Stack</h4>
+              <p style="font-size:0.82rem;">Video: Higgsfield AI — 4–5 separate scene prompts ("elderly man preparing leaves at wooden table, warm evening light, Israeli interior, 1970s aesthetic", "family gathering around a table, animated 2D style, warm ochre palette") · Enhancement: Magnific on 5 hero frames · VO: ElevenLabs Hebrew female (warm, storytelling pace) · Music: acoustic oud/string from licensed pack · Assembly: CapCut (stitch scenes to VO timing, Hebrew text fade-ins)</p>
             </div>
             <div>
-              <h4>One-Time Asset Value</h4>
-              <p style="font-size:0.82rem;">Grandfather character rig created here is reusable across all future "family tradition" creatives — estimated value over 10 uses: ₪15,000–30,000 in avoided future production costs. Invoice separately as a one-time ₪3,000–5,000 asset fee.</p>
+              <h4>Reusable Prompts</h4>
+              <p style="font-size:0.82rem;">The Higgsfield "warm Israeli family interior" and "grandfather at table" scene seeds apply to every future gathering/tradition creative in this series. Zero additional prompt development cost per reuse — just swap the specific action in the prompt.</p>
             </div>
           </div>
         </div>
@@ -1162,14 +1138,14 @@ tr:hover td { background: var(--bg-2); }
         <div class="prod-section">
           <div class="prod-section-label">Cost &amp; Pricing</div>
           <div class="cost-grid">
-            <div class="cost-cell"><div class="cc-label">AI Tools</div><div class="cc-val">₪200–350</div><div class="cc-usd">≈ $54–95</div></div>
-            <div class="cost-cell"><div class="cc-label">Human Labor</div><div class="cc-val">₪1,800–3,000</div><div class="cc-usd">12–20 hrs</div></div>
-            <div class="cost-cell"><div class="cc-label">VO + Music</div><div class="cc-val">₪300–500</div><div class="cc-usd">licensed</div></div>
-            <div class="cost-cell"><div class="cc-label">Character Rig (1x)</div><div class="cc-val">₪3,000–5,000</div><div class="cc-usd">reusable asset</div></div>
-            <div class="cost-cell"><div class="cc-label">Total (incl. rig)</div><div class="cc-val">₪6,000–10,500</div><div class="cc-usd">≈ $1,620–2,838</div></div>
-            <div class="cost-cell cost-highlight"><div class="cc-label">Client Price</div><div class="cc-val">₪14,000–20,000</div><div class="cc-usd">≈ $3,780–5,405</div></div>
+            <div class="cost-cell"><div class="cc-label">Higgsfield Gen</div><div class="cc-val">₪22–45</div><div class="cc-usd">4–5 scene shots</div></div>
+            <div class="cost-cell"><div class="cc-label">Magnific Enhance</div><div class="cc-val">₪3–8</div><div class="cc-usd">5 frames</div></div>
+            <div class="cost-cell"><div class="cc-label">VO + Music</div><div class="cc-val">₪10–20</div><div class="cc-usd">ElevenLabs + pack</div></div>
+            <div class="cost-cell"><div class="cc-label">Human Labor</div><div class="cc-val">₪180–250</div><div class="cc-usd">2–2.8 hrs</div></div>
+            <div class="cost-cell"><div class="cc-label">Total Internal</div><div class="cc-val">₪270–380</div><div class="cc-usd">≈ $73–103</div></div>
+            <div class="cost-cell cost-highlight"><div class="cc-label">Client Price</div><div class="cc-val">₪1,050–1,200</div><div class="cc-usd">≈ $284–324</div></div>
           </div>
-          <p style="font-size:0.78rem; color:var(--text-3);">Production time: 18–28 hours · Rig is invoiced as a separate one-time line item. Subsequent uses of the character cost significantly less.</p>
+          <p style="font-size:0.78rem; color:var(--text-3);">Production time: 2–3 hours · Higgsfield "warm interior + family" scene prompt reusable for all future gathering/tradition creatives. No character rig needed — Higgsfield generates consistent characters from the same seed prompt.</p>
         </div>
 
         <div class="prod-section">
@@ -1274,12 +1250,12 @@ tr:hover td { background: var(--bg-2); }
           <div class="prod-section-label">Production</div>
           <div class="two-col">
             <div>
-              <h4>Recommended Tools</h4>
-              <p style="font-size:0.82rem;">Macro visuals: Flux 1.1 Pro with macro photography prompts · Motion: Kling AI (slow camera drift through macro) or Runway · Typography animation: After Effects (kinetic type system, particles) · VO: ElevenLabs Hebrew male (confident, minimal) · No music — ambient sound design only</p>
+              <h4>Primary Stack</h4>
+              <p style="font-size:0.82rem;">Video: Higgsfield AI — 2 clips: "extreme macro close-up fresh khat leaf, dew drop, slow drift, black background" + "botanical branch reveal, soft focus pull-back" · Magnific on 3 key frames (dewy texture detail) · Text animation: CapCut built-in text effects (bold Hebrew, fade-slam timing) · VO: ElevenLabs "Alon" (minimal, 3–4 word sentences, long pauses) · No music — ambient silence + soft nature sounds from CapCut library</p>
             </div>
             <div>
-              <h4>Reusable from this Creative</h4>
-              <p style="font-size:0.82rem;">Hebrew kinetic type system (font, weight, timing, motion presets) — once built in After Effects, reusable across all future kinetic type creatives at near-zero additional cost.</p>
+              <h4>Reusable</h4>
+              <p style="font-size:0.82rem;">CapCut Hebrew caption preset (font, size, RTL alignment, timing) created here applies to all future kinetic type concepts at ₪0. Save as a CapCut template.</p>
             </div>
           </div>
         </div>
@@ -1287,14 +1263,14 @@ tr:hover td { background: var(--bg-2); }
         <div class="prod-section">
           <div class="prod-section-label">Cost &amp; Pricing</div>
           <div class="cost-grid">
-            <div class="cost-cell"><div class="cc-label">AI Tools</div><div class="cc-val">₪80–150</div><div class="cc-usd">≈ $22–41</div></div>
-            <div class="cost-cell"><div class="cc-label">Human Labor</div><div class="cc-val">₪400–700</div><div class="cc-usd">3–5 hrs</div></div>
-            <div class="cost-cell"><div class="cc-label">VO + Sound</div><div class="cc-val">₪80–150</div><div class="cc-usd">minimal</div></div>
-            <div class="cost-cell"><div class="cc-label">Type System (1x)</div><div class="cc-val">₪600–1,000</div><div class="cc-usd">reusable</div></div>
-            <div class="cost-cell"><div class="cc-label">Total Cost</div><div class="cc-val">₪1,160–2,000</div><div class="cc-usd">≈ $313–540</div></div>
-            <div class="cost-cell cost-highlight"><div class="cc-label">Client Price</div><div class="cc-val">₪3,500–5,000</div><div class="cc-usd">≈ $946–1,351</div></div>
+            <div class="cost-cell"><div class="cc-label">Higgsfield Gen</div><div class="cc-val">₪8–18</div><div class="cc-usd">2 macro clips</div></div>
+            <div class="cost-cell"><div class="cc-label">Magnific Enhance</div><div class="cc-val">₪1–3</div><div class="cc-usd">2–3 frames</div></div>
+            <div class="cost-cell"><div class="cc-label">VO + Sound</div><div class="cc-val">₪5–12</div><div class="cc-usd">ElevenLabs</div></div>
+            <div class="cost-cell"><div class="cc-label">Human Labor</div><div class="cc-val">₪90–135</div><div class="cc-usd">1–1.5 hrs</div></div>
+            <div class="cost-cell"><div class="cc-label">Total Internal</div><div class="cc-val">₪175–220</div><div class="cc-usd">≈ $47–59</div></div>
+            <div class="cost-cell cost-highlight"><div class="cc-label">Client Price</div><div class="cc-val">₪850–950</div><div class="cc-usd">≈ $230–257</div></div>
           </div>
-          <p style="font-size:0.78rem; color:var(--text-3);">Production time: 5–8 hours · Fastest creative in this batch. Type system is a one-time cost credited to client.</p>
+          <p style="font-size:0.78rem; color:var(--text-3);">Production time: 1–1.5 hours · Cheapest and fastest creative in this batch. CapCut handles all text animation — no After Effects. Caption template reusable at ₪0 for all future kinetic type creatives.</p>
         </div>
 
         <div class="prod-section">
@@ -1417,12 +1393,12 @@ tr:hover td { background: var(--bg-2); }
           <div class="prod-section-label">Production</div>
           <div class="two-col">
             <div>
-              <h4>Recommended Tools</h4>
-              <p style="font-size:0.82rem;">Character design: Midjourney (style reference) → Spine 2D (rig with facial expressions) · Background: Flux 1.1 Pro (interior scene) · VO: ElevenLabs Hebrew (character voice — expressive, fast paced; narrator — deadpan) · Comedy timing: After Effects with frame-by-frame sound sync · Music: upbeat Israeli folk-pop, licensed</p>
+              <h4>Primary Stack</h4>
+              <p style="font-size:0.82rem;">Video: Higgsfield AI — 4–5 comedy scene prompts ("animated Israeli man arriving at door holding grocery bag, cartoon style, warm apartment interior", "slow-motion comedic reveal of khat branch with shaft of light, exaggerated cartoon expressions") · Magnific on 4 frames · VO: ElevenLabs — 2 voices: expressive fast-paced character (Israeli cadence) + deadpan narrator · Music: upbeat Israeli folk-pop from licensed pack · Assembly: CapCut (tight cut timing synced to VO rhythm)</p>
             </div>
             <div>
-              <h4>Reusable Assets</h4>
-              <p style="font-size:0.82rem;">The character rig created here can be reused for a "real Israeli" series — a recurring character in multiple future concepts. Consider this the pilot episode of a mini-series. If C-04 performs well, this character becomes the brand mascot.</p>
+              <h4>Reusable Prompt Set</h4>
+              <p style="font-size:0.82rem;">Higgsfield "Israeli character, animated cartoon style, warm apartment" scene seed is reusable for the entire ישראלי אמיתי series. Episode 2, 3, 4 cost identical to Episode 1 after the style seed is established. No new character development needed per episode.</p>
             </div>
           </div>
         </div>
@@ -1430,14 +1406,14 @@ tr:hover td { background: var(--bg-2); }
         <div class="prod-section">
           <div class="prod-section-label">Cost &amp; Pricing</div>
           <div class="cost-grid">
-            <div class="cost-cell"><div class="cc-label">AI Tools</div><div class="cc-val">₪180–300</div><div class="cc-usd">≈ $49–81</div></div>
-            <div class="cost-cell"><div class="cc-label">Human Labor</div><div class="cc-val">₪1,500–2,500</div><div class="cc-usd">10–17 hrs</div></div>
-            <div class="cost-cell"><div class="cc-label">VO + Music</div><div class="cc-val">₪300–500</div><div class="cc-usd">2 voice styles</div></div>
-            <div class="cost-cell"><div class="cc-label">Character Rig (1x)</div><div class="cc-val">₪2,500–4,000</div><div class="cc-usd">reusable mascot</div></div>
-            <div class="cost-cell"><div class="cc-label">Legal Review</div><div class="cc-val">₪500–1,000</div><div class="cc-usd">required for MEDIUM</div></div>
-            <div class="cost-cell cost-highlight"><div class="cc-label">Client Price</div><div class="cc-val">₪13,000–18,000</div><div class="cc-usd">≈ $3,514–4,865</div></div>
+            <div class="cost-cell"><div class="cc-label">Higgsfield Gen</div><div class="cc-val">₪22–45</div><div class="cc-usd">4–5 comedy scenes</div></div>
+            <div class="cost-cell"><div class="cc-label">Magnific Enhance</div><div class="cc-val">₪3–8</div><div class="cc-usd">5 frames</div></div>
+            <div class="cost-cell"><div class="cc-label">VO + Music</div><div class="cc-val">₪12–22</div><div class="cc-usd">2 ElevenLabs voices</div></div>
+            <div class="cost-cell"><div class="cc-label">Human Labor</div><div class="cc-val">₪180–250</div><div class="cc-usd">2–2.8 hrs</div></div>
+            <div class="cost-cell"><div class="cc-label">Legal Review (ext.)</div><div class="cc-val">₪300–500</div><div class="cc-usd">MEDIUM risk — required</div></div>
+            <div class="cost-cell cost-highlight"><div class="cc-label">Client Price</div><div class="cc-val">₪1,100–1,300</div><div class="cc-usd">≈ $297–351 + legal</div></div>
           </div>
-          <p style="font-size:0.78rem; color:var(--text-3);">Total production cost: ₪5,500–9,300. Production time: 15–22 hours. Legal review is required before publication. Character rig is invoiced separately.</p>
+          <p style="font-size:0.78rem; color:var(--text-3);">Production cost: ₪250–380 (excl. legal review). Legal review ₪300–500 billed separately or via ₪1,000/month compliance retainer. Production time: 2–3 hours. Higgsfield character scene prompt set reusable for ישראלי אמיתי series at ₪0.</p>
         </div>
 
         <div class="prod-section">
